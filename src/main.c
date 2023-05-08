@@ -6,15 +6,15 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/06 18:50:46 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:39:38 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	ft_cnt(char *string)
+int ft_cnt(char *string)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!(string))
@@ -28,10 +28,10 @@ int	ft_cnt(char *string)
 	return (0);
 }
 
-char	**ft_read_input(char *user_input)
+char *ft_read_input()
 {
-	char	*prompt;
-	char	**returned;
+	char *prompt;
+	char *user_input;
 
 	prompt = ft_colorize("minishell-1.0$ ", "green");
 	user_input = readline(prompt);
@@ -39,72 +39,70 @@ char	**ft_read_input(char *user_input)
 	if (!(user_input))
 		ft_error("Bad user input\n");
 	add_history(user_input);
-	returned = ft_split(user_input, ' ');
-	return (returned);
+	return (ft_strtrim(user_input, " \t"));
 }
 
-void	printf_linked(t_pre_tokens *head)
+void printf_linked(t_pre_tokens *head)
 {
-	t_pre_tokens	*node;
-	
+	t_pre_tokens *node;
+
 	node = head;
 	while (node)
 	{
-		printf("$%s$\n", node->content);
+		printf("%s\n", node->content);
 		node = node->next;
 	}
 }
 
+t_pre_tokens	*ft_tokenizer(char *user_input)
+{
+	int 			in_double_quotes;
+	int 			in_quotes;
+	t_pre_tokens	*head;
+	int 			i;
+	int				j;
+
+	i = 0;
+	j = 0;
+	in_quotes = 0;
+	in_double_quotes = 0;
+	head = NULL;
+	while (user_input[i] != '\0')
+	{
+		if (user_input[i] == '"' && !in_double_quotes)
+		{
+			in_quotes = !in_quotes;
+			i++;
+			continue ;
+		}
+		else if (user_input[i] == '\'' && !in_quotes)
+		{
+			in_double_quotes = !in_double_quotes;
+			i++;
+			continue ;
+		}
+		if (!in_quotes && !in_double_quotes && user_input[i] == ' ')
+		{
+			user_input[i] = '\0';
+			add_pre_t(&head, &(user_input[j]));
+			j = i + 1;
+		}
+		i++;
+	}
+	add_pre_t(&head, &(user_input[j]));
+	return (head);
+}
+
 int main(int argc, char const *argv[])
 {
-	t_pre_tokens	*token_h;
-	t_user_data		usr_dt;
-	int				i;
-	int				j;
+	t_pre_tokens	*head;
+	t_user_data 	data;
 
 	while (1)
 	{
-		token_h = NULL;
-		usr_dt.spl_inp = ft_read_input(usr_dt.user_input);
-		i = 0;
-		while (usr_dt.spl_inp[i])
-		{
-			add_pre_t(&token_h, usr_dt.spl_inp[i], i);
-			i++;
-		}
-		free_double(usr_dt.spl_inp);
-		{
-			t_pre_tokens	*tok;
-			t_pre_tokens	*new_head;
-			int				wh_;
-			char			*string;
-
-			wh_ = 1;
-			tok = token_h;
-			new_head = NULL;
-			while (tok)
-			{
-				if (!(ft_cnt(tok->content)))
-					add_pre_t(&new_head, tok->content, -1);
-				else
-				{
-					string = tok->content;
-					tok = tok->next;
-					while ((tok) && (!(ft_cnt(tok->content))))
-					{
-						string = ft_strjoin(string, tok->content);
-						tok = tok->next;
-					}
-					if (tok)
-						string = ft_strjoin(string, tok->content);
-					add_pre_t(&new_head, string, -1);
-				}
-				if (tok)
-					tok = tok->next;
-			}
-			printf_linked(new_head);
-			exit(0);
-		}
+		data.user_input = ft_read_input();
+		head = ft_tokenizer(data.user_input);
+		printf_linked(head);
 	}
 	return 0;
 }
