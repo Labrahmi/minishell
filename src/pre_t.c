@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:01:42 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/08 21:32:41 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:36:14 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int add_pre_t(t_pre_tokens **head, char *content)
 {
 	t_pre_tokens *create_new_node;
 
+	if (!(content) || ft_strlen(content) == 0)
+		return(0);
 	if(!(create_new_node = malloc(sizeof(t_pre_tokens))))
 		return(0);
 	create_new_node->content = ft_strdup(content);
