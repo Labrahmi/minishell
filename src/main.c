@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/10 15:43:08 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/10 20:08:20 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,70 @@ void printf_linked(t_pre_tokens *head)
 	}
 }
 
+void	sub_and_add(char *user_input, int start, int end, t_pre_tokens **head)
+{
+	char	*sub;
+
+	sub = ft_substr(user_input, start, end - start);
+	add_pre_t(head, sub);
+	free(sub);
+}
+
+int	is_symbol(char symbol)
+{
+	if (symbol == '|' || symbol == '>' || symbol == '<')
+		return (1);
+	return (0);
+}
+
+void	add_symbol(t_pre_tokens **head, char *user_input, int start, int *end)
+{
+	char	*symbole_to_add;
+
+	sub_and_add(user_input, start, *end, head);
+	symbole_to_add = malloc(3);
+	symbole_to_add[0] = user_input[*end];
+	symbole_to_add[1] = '\0';
+	if (user_input[*end + 1])
+	{
+		if (user_input[*end] == '>' && user_input[*end + 1] == '>')
+		{
+			symbole_to_add[1] = '>';
+			symbole_to_add[2] = '\0';
+			(*end)++;
+		}
+		if (user_input[*end] == '<' && user_input[*end + 1] == '<')
+		{
+			symbole_to_add[1] = '<';
+			symbole_to_add[2] = '\0';
+			(*end)++;
+		}
+	}
+	add_pre_t(head, symbole_to_add);
+	free(symbole_to_add);
+}
+
+void	free_linked(t_pre_tokens **head)
+{
+	t_pre_tokens	*node;
+	t_pre_tokens	*next;
+
+	node = *head;
+	while (node)
+	{
+		next = node->next;
+		free(node->content);
+		free(node);
+		node = next;
+	}
+}
+
 t_pre_tokens *ft_tokenizer(char *user_input)
 {
 	int 			in_double_quotes;
 	int 			in_quotes;
 	t_pre_tokens 	*head;
 	int 			start;
-	char 			*sub;
 	int 			end;
 
 	end = 0;
@@ -87,14 +144,18 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 		{
 			if (user_input[end] == ' ')
 			{
-				sub = ft_substr(user_input, start, end - start);
-				add_pre_t(&head, sub);
+				sub_and_add(user_input, start, end, &head);
+				start = end + 1;
+			}
+			if (is_symbol(user_input[end]))
+			{
+				add_symbol(&head, user_input, start, &end);
 				start = end + 1;
 			}
 		}
 		end++;
 	}
-	add_pre_t(&head, &(user_input[start]));
+	sub_and_add(user_input, start, end, &head);
 	return (head);
 }
 
@@ -108,7 +169,12 @@ int main(int argc, char const *argv[])
 		data.user_input = ft_read_input();
 		head = ft_tokenizer(data.user_input);
 		printf_linked(head);
+		free_linked(&head);
 		free(data.user_input);
 	}
 	return 0;
 }
+
+
+// echo "hey">>ls
+// 0123456789ABCD
