@@ -3,6 +3,7 @@
         "*.ejs": "html",
         "readline.h": "c",
         "minishell.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "__config": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/10 20:08:20 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/13 23:35:29 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,28 @@ char *ft_read_input()
 
 void printf_linked(t_pre_tokens *head)
 {
-	t_pre_tokens *node;
-	int i;
+	t_pre_tokens	*node;
+	int				i;
 
 	node = head;
 	i = 0;
 	while (node)
 	{
-		printf("token[%d(len:%zu)] : %s\n", i++, ft_strlen(node->content), node->content);
+		printf("token[%d] : len : %zu : content : %s : content_address : %p : node_address : %p : next : %p\n", i++, ft_strlen(node->content), node->content, node->content, node, node->next);
 		node = node->next;
 	}
 }
 
-void	sub_and_add(char *user_input, int start, int end, t_pre_tokens **head)
+int	sub_and_add(char *user_input, int start, int end, t_pre_tokens **head)
 {
 	char	*sub;
+	int		ret;
 
+	ret = 0;
 	sub = ft_substr(user_input, start, end - start);
-	add_pre_t(head, sub);
+	ret = add_pre_t(head, sub);
 	free(sub);
+	return (ret);
 }
 
 int	is_symbol(char symbol)
@@ -75,9 +78,10 @@ int	is_symbol(char symbol)
 	return (0);
 }
 
-void	add_symbol(t_pre_tokens **head, char *user_input, int start, int *end)
+int	add_symbol(t_pre_tokens **head, char *user_input, int start, int *end)
 {
 	char	*symbole_to_add;
+	int		ret;
 
 	sub_and_add(user_input, start, *end, head);
 	symbole_to_add = malloc(3);
@@ -98,8 +102,9 @@ void	add_symbol(t_pre_tokens **head, char *user_input, int start, int *end)
 			(*end)++;
 		}
 	}
-	add_pre_t(head, symbole_to_add);
+	ret = add_pre_t(head, symbole_to_add);
 	free(symbole_to_add);
+	return (ret);
 }
 
 void	free_linked(t_pre_tokens **head)
@@ -117,46 +122,57 @@ void	free_linked(t_pre_tokens **head)
 	}
 }
 
+void *ft_init_zeros(tokenizer_t *tok)
+{
+	tok->end = 0;
+	tok->start = 0;
+	tok->in_quotes = 0;
+	tok->in_double_quotes = 0;
+	return (NULL);
+}
+
+int	ft_tokenizer_loop(tokenizer_t *tok)
+{
+	int	ret;
+
+	ret = 0;
+	while (tok->user_input[tok->end] != '\0')
+	{
+		if (tok->user_input[tok->end] == '"' && !(tok->in_quotes))
+			tok->in_double_quotes = !(tok->in_double_quotes);
+		else if (tok->user_input[tok->end] == '\'' && !(tok->in_double_quotes))
+			tok->in_quotes = !(tok->in_quotes);
+		if (!(tok->in_quotes) && !(tok->in_double_quotes))
+		{
+			if (tok->user_input[tok->end] == ' ')
+			{
+				ret += sub_and_add(tok->user_input, tok->start, tok->end, &tok->head);
+				tok->start = tok->end + 1;
+			}
+			if (is_symbol(tok->user_input[tok->end]))
+			{
+				ret += add_symbol(&tok->head, tok->user_input, tok->start, &tok->end);
+				tok->start = tok->end + 1;
+			}
+		}
+		(tok->end)++;
+	}
+	ret += sub_and_add(tok->user_input, tok->start, tok->end, &tok->head);
+	return (ret);
+}
+
 t_pre_tokens *ft_tokenizer(char *user_input)
 {
-	int 			in_double_quotes;
-	int 			in_quotes;
-	t_pre_tokens 	*head;
-	int 			start;
-	int 			end;
+	tokenizer_t	tok;
 
-	end = 0;
-	start = 0;
-	in_quotes = 0;
-	in_double_quotes = 0;
-	head = NULL;
-	while (user_input[end] != '\0')
+	tok.head = ft_init_zeros(&tok);
+	tok.user_input = user_input;
+	if (ft_tokenizer_loop(&tok) != 0)
 	{
-		if (user_input[end] == '"' && !(in_quotes))
-		{
-			in_double_quotes = !(in_double_quotes);
-		}
-		else if (user_input[end] == '\'' && !(in_double_quotes))
-		{
-			in_quotes = !(in_quotes);
-		}
-		if (!(in_quotes) && !(in_double_quotes))
-		{
-			if (user_input[end] == ' ')
-			{
-				sub_and_add(user_input, start, end, &head);
-				start = end + 1;
-			}
-			if (is_symbol(user_input[end]))
-			{
-				add_symbol(&head, user_input, start, &end);
-				start = end + 1;
-			}
-		}
-		end++;
+		free_linked(&(tok.head));
+		return (NULL);
 	}
-	sub_and_add(user_input, start, end, &head);
-	return (head);
+	return (tok.head);
 }
 
 int main(int argc, char const *argv[])
@@ -174,7 +190,3 @@ int main(int argc, char const *argv[])
 	}
 	return 0;
 }
-
-
-// echo "hey">>ls
-// 0123456789ABCD
