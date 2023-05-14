@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:01:42 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/14 01:28:58 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/14 22:41:21 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int add_pre_t(t_pre_tokens **head, char *content)
 		return (1);
 	if (!(check_pre_t(content)))
 	{
-		printf("%s", ft_colorize("Error: missing quote\n", "red"));
 		free(created_node);
 		return (1);
 	}

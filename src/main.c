@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/13 23:35:29 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/14 22:41:24 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	if (ft_tokenizer_loop(&tok) != 0)
 	{
 		free_linked(&(tok.head));
+		printf("%s", ft_colorize("Error: missing quote\n", "red"));
 		return (NULL);
 	}
 	return (tok.head);
