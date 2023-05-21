@@ -6,73 +6,63 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/21 01:19:27 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/21 01:53:18 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// #include <stddef.h>
-
-int ft_strchr_int(const char *str, int c)
+char *absolute_token(char *string)
 {
-    char ch = (char)c;
+	int	i = 0;
 
-    while (*str != '\0')
-    {
-        if (*str == ch)
-            return 1;
-        str++;
-    }
-    if (ch == '\0')
-        return 1;
-
-    return 0;
+	while (string[i] && string[i] != '\"' && string[i] != ' ')
+		i++;
+	return (ft_substr(string, 0, i));
 }
 
-char *remove_quotes(char *token, t_env *head_env)
+char	*real_value(char *ab, t_env **head_env)
 {
-	char *result = NULL;
+	t_env	*node;
 
-	if (token[0] == '\'' && token[ft_strlen(token) - 1] == '\'')
+	node = *head_env;
+	while (node)
 	{
-		// Remove single quotes
-		result = ft_strdup(token + 1);
-		result[ft_strlen(result) - 1] = '\0';
+		if (ft_strncmp(ab, node->index, ft_strlen(ab)) == 0)
+			return (ft_strdup(node->value));
+		node = node->next;
 	}
-	else if (token[0] == '"' && token[ft_strlen(token) - 1] == '"')
-	{
-		// Remove double quotes
-		result = ft_strdup(token + 1);
-		result[ft_strlen(result) - 1] = '\0';
-	}
-	else if (token[0] == '$' && !ft_strchr_int(token, '\''))
-	{
-		// Lookup variable value in head_env
-		char *var = token + 1; // Skip '$' symbol
-		t_env *env_node = head_env;
-		while (env_node != NULL)
-		{
-			if (ft_strncmp(env_node->index, var, ft_strlen(env_node->index)) == 0)
-			{
-				result = ft_strdup(env_node->value);
-				break;
-			}
-			env_node = env_node->next;
-		}
-	}
-
-	// If result is still NULL, no modifications needed
-	if (result == NULL)
-		result = ft_strdup(token);
-
-	return result;
+	return ft_strdup("");
 }
 
 char	*remove_quotes(char *token, t_env *head_env)
 {
+	int	in_single_quote = 0;
+	int	i = 0;
+
+	while (token[i])
+	{
+		if (token[i] == '\'')
+			in_single_quote = (!in_single_quote);
+		if (token[i] == '$' && (!in_single_quote))
+		{
+			char *ab = absolute_token(&token[i + 1]);
+			char *pre = ft_strdup(token);
+			pre[i] = '\0';
+			char *vlue = real_value(ab, &head_env);
+			char *res = ft_strjoin(pre, vlue);
+			res = ft_strjoin(res, token + i + ft_strlen(ab) + 1);
+			printf(">>>>>%s\n", res);
+			exit(0);
+		}
+		i++;
+	}
 	// code here
+	return 0;
 }
+// "echo hello world $HOME from our string"
+// "echo hello world 
+// youssef $HOME $PATH $LOGNAME
 
 void ft_remove_quotes(t_pre_tokens **head, t_env *head_env)
 {
