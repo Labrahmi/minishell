@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/05/21 00:51:42 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/05/21 20:09:42 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,16 +28,16 @@ RM = rm -f
 
 all:	$(NAME)
 
-$(NAME):	$(OBJS) 
-	@make -C ./inc/libft/
-	$(CC) $(CFLAGS) ./inc/libft/libft.a $(OBJS) -lreadline -o $(NAME)
+$(NAME):	$(SRCS) 
+# @make -C ./inc/libft/
+	$(CC) $(CFLAGS) ./inc/libft/libft.a $(SRCS) -lreadline -o $(NAME)
 
 clean:
-	@make clean -C ./inc/libft/
+# @make clean -C ./inc/libft/
 	$(RM) $(OBJS) 
 
 fclean:	clean
-	@make fclean -C ./inc/libft/
+# @make fclean -C ./inc/libft/
 	$(RM) $(NAME)
 
 re:	fclean all
