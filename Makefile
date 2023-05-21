@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/05/05 16:38:07 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/05/21 00:51:42 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 
 SRCS = 	./src/main.c ./src/error.c \
 		./src/colorize.c ./src/free_double.c \
-		./src/pre_t.c
+		./src/pre_t.c ./src/remove_quotes.c \
+		./src/set_env.c
 
 OBJS = $(SRCS:.c=.o)
 

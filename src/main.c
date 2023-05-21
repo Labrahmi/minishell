@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/14 22:41:24 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/21 00:52:52 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,19 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf("token[%d] : len : %zu : content : %s : content_address : %p : node_address : %p : next : %p\n", i++, ft_strlen(node->content), node->content, node->content, node, node->next);
+		printf("[%d] : %s\n", ++i, node->content);
+		node = node->next;
+	}
+}
+
+void printf_env(t_env *head)
+{
+	t_env	*node;
+
+	node = head;
+	while (node)
+	{
+		printf("%s=%s\n", node->index, node->value);
 		node = node->next;
 	}
 }
@@ -176,15 +188,18 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	return (tok.head);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char const *argv[], char **env)
 {
 	t_pre_tokens	*head;
 	t_user_data		data;
+	t_env			*env_head;
 
+	env_head = ft_set_env(env);
 	while (1)
 	{
 		data.user_input = ft_read_input();
 		head = ft_tokenizer(data.user_input);
+		ft_remove_quotes(&head, env_head);
 		printf_linked(head);
 		free_linked(&head);
 		free(data.user_input);

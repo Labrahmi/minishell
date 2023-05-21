@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/14 00:35:31 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/21 00:53:17 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ enum token_type
 	_ARG,
 	_FLG,
 };
+
+typedef struct s_env
+{
+	char			*index;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_check_arg
 {
@@ -57,9 +64,12 @@ typedef struct s_user_data
 	char	*user_input;
 }   t_user_data;
 
-
 void			ft_error(char *message);
 void    		free_double(char **array);
 char    		*ft_colorize(char *message, char *color);
 int				add_pre_t(t_pre_tokens **head, char *content);
 void			free_linked(t_pre_tokens **head);
+void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
+t_env			*ft_set_env(char **env);
+
+
