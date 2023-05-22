@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:16:38 by ylabrahm          #+#    #+#             */
-/*   Updated: 2022/10/21 12:45:34 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/22 05:34:09 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_cat(char *ret_str, const char *s1, const char *s2)
+static void	ft_cat(char *ret_str, char *s1, char *s2)
 {
 	size_t	len_1;
 	size_t	len_2;
@@ -36,19 +36,20 @@ static void	ft_cat(char *ret_str, const char *s1, const char *s2)
 	}
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*ret_str;
 	int		s1_len;
 	int		s2_len;
 
-	if ((s1 == NULL) || (s2 == NULL))
-		return (NULL);
+	if ((s1 == 0) || (s2 == 0))
+		return (0);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	ret_str = (char *) ft_calloc((s1_len + s2_len + 1), sizeof(char));
 	if (!ret_str)
-		return (NULL);
+		return (0);
 	ft_cat(ret_str, s1, s2);
+	free(s1);
 	return (ret_str);
 }

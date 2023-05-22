@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 01:03:21 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/20 01:19:19 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/22 05:11:56 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 char	*ft_get_index(char *env_one)
 {
-	int	i;
+	int		i;
+	char	*ret;
 
 	i = 0;
 	while (env_one[i] && env_one[i] != '=')
 		i++;
-	return (ft_substr(env_one, 0, i));
+	ret = ft_substr(env_one, 0, i);
+	// free(env_one);
+	return (ret);
 }
 
 char	*ft_get_value(char *env_one)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*ret;
 
 	i = 0;
 	j = 0;
@@ -34,7 +38,9 @@ char	*ft_get_value(char *env_one)
 	i++;
 	while (env_one[j])
 		j++;
-	return (ft_substr(env_one, i, j));
+	ret = ft_substr(env_one, i, j);
+	// free(env_one);
+	return (ret);
 }
 
 void	add_env_list(t_env **env_head, char *env_one)
@@ -62,7 +68,6 @@ t_env	*ft_set_env(char **env)
 	int		i;
 
 	i = 0;
-	// env_head = malloc(sizeof(t_env));
 	env_head = NULL;
 	while (env[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:25:07 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/05 11:39:45 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/22 03:35:15 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		*ft_strrchr(const char *s, int c);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_substr(char *s, unsigned int start, size_t len);
+char		*ft_strjoin(char *s1, char *s2);
+char		*ft_strtrim(char *s1, char *set);
 char		*ft_strdup(const char *s1);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));

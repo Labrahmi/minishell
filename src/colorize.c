@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:52:43 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/15 15:12:05 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/22 05:38:26 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ char	*ft_get_color(char *message, char *color_tag)
 
 	prefix = ft_strdup(color_tag);
 	char *colored_message = ft_strjoin(prefix, message);
-	free(prefix);
 	prefix = colored_message;
 	prefix = ft_strjoin(prefix, "\033[0m");
-	free(colored_message);
 	return (prefix);
 }
 
