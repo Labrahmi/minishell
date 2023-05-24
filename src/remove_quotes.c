@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/24 01:55:15 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/24 04:10:48 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ char	*expand_variable(char *token, t_env *head_env)
 
 int	set_up_remove_vars(int *j, int *in_single, int *in_double)
 {
-	*j = 0;
-	*in_single = 0;
-	*in_double = 0;
-	return (-1);
+	(*j) = 0;
+	(*in_single) = 0;
+	(*in_double) = 0;
+	return (0);
 }
 
 char	*remove_quote(char *content)
@@ -127,25 +127,15 @@ char	*remove_quote(char *content)
 
 	i = set_up_remove_vars(&j, &in_single, &in_double);
 	copy = malloc(ft_strlen(content) + 1);
-	while (content[++i])
+	while (content[i])
 	{
 		if (content[i] == '\'' && !(in_double))
-		{
 			in_single = !(in_single);
-			i++;
-			continue;
-		}
-		if (content[i] == '\"' && !(in_single))
-		{
+		else if (content[i] == '\"' && !(in_single))
 			in_double = !(in_double);
-			i++;
-			continue;
-		}
 		else
-		{
-			copy[j] = content[i];
-			j++;
-		}
+			copy[j++] = content[i];
+		i++;
 	}
 	copy[j] = '\0';
 	free(content);
