@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_t.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:01:42 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/14 22:41:21 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:53:26 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ int check_pre_t(char *content)
 	args.d_quote = 0;
 	args.i = -1;
 	args.stack = malloc(ft_strlen(content) + 1);
+	args.content = ft_strdup(content);
 	check_loop(&args);
 	free(args.stack);
+	free(args.content);
 	return (args.top < 0);
 }
 

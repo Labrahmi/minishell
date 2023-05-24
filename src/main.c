@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/23 22:17:27 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:03:40 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char *ft_read_input()
 	char *user_input;
 	char *trimed_value;
 
-	prompt = ft_colorize("minishell-1.0> ", "green");
+	prompt = ft_colorize("monoshell-1.0> ", "green");
 	user_input = readline(prompt);
 	free(prompt);
 	if (!(user_input))
@@ -157,9 +157,9 @@ int	ft_tokenizer_loop(tokenizer_t *tok)
 	ret = 0;
 	while (tok->user_input[tok->end] != '\0')
 	{
-		if (tok->user_input[tok->end] == '"' && !(tok->in_quotes))
+		if (tok->user_input[tok->end] == '\"' && !(tok->in_quotes))
 			tok->in_double_quotes = !(tok->in_double_quotes);
-		else if (tok->user_input[tok->end] == '\'' && !(tok->in_double_quotes))
+		if (tok->user_input[tok->end] == '\'' && !(tok->in_double_quotes))
 			tok->in_quotes = !(tok->in_quotes);
 		if (!(tok->in_quotes) && !(tok->in_double_quotes))
 		{
@@ -183,15 +183,20 @@ int	ft_tokenizer_loop(tokenizer_t *tok)
 t_pre_tokens *ft_tokenizer(char *user_input)
 {
 	tokenizer_t	tok;
+	char		*error;
 
 	tok.head = ft_init_zeros(&tok);
-	tok.user_input = user_input;
+	tok.user_input = ft_strdup(user_input);
 	if (ft_tokenizer_loop(&tok) != 0)
 	{
 		free_linked(&(tok.head));
-		printf("%s", ft_colorize("Error: missing quote\n", "red"));
+		error = ft_colorize("Error: missing quote\n", "red");
+		printf("%s", error);
+		free(error);
+		free(tok.user_input);
 		return (NULL);
 	}
+	free(tok.user_input);
 	return (tok.head);
 }
 
@@ -210,7 +215,7 @@ int main(int argc, char const *argv[], char **env)
 		printf_linked(head);
 		free_linked(&head);
 		free(data.user_input);
-		// print_leaks();
+		print_leaks();
 	}
 	return 0;
 }
