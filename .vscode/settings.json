@@ -1,10 +1,11 @@
 {
     "files.associations": {
-        "*.ejs": "html",
-        "readline.h": "c",
-        "minishell.h": "c",
-        "stdlib.h": "c",
-        "history.h": "c",
-        "get_next_line.h": "c"
-    }
+		"*.ejs": "html",
+		"readline.h": "c",
+		"minishell.h": "c",
+		"stdlib.h": "c",
+		"history.h": "c",
+		"get_next_line.h": "c",
+		"availability.h": "c"
+	}
 }

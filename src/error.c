@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:41:51 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/05 10:50:06 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/23 22:10:07 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	ft_error(char *message)
 {
-	printf("%s", message);
-	exit(1);
+	if (message)
+	{
+		printf("%s", message);
+		exit(1);
+	}
+	exit(0);
 }

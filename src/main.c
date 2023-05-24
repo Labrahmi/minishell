@@ -6,11 +6,18 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/22 23:06:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/23 22:17:27 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	print_leaks()
+{
+	printf("\n\n");
+	printf("-----------[Leaks]-----------\n");
+	system("leaks minishell | grep -A20 'leaks Report Version: 4.0'");
+}
 
 int ft_cnt(char *string)
 {
@@ -38,7 +45,7 @@ char *ft_read_input()
 	user_input = readline(prompt);
 	free(prompt);
 	if (!(user_input))
-		ft_error("Bad user input\n");
+		ft_error(NULL);
 	add_history(user_input);
 	trimed_value = ft_strtrim(user_input, " \t");
 	free(user_input);
@@ -203,6 +210,7 @@ int main(int argc, char const *argv[], char **env)
 		printf_linked(head);
 		free_linked(&head);
 		free(data.user_input);
+		// print_leaks();
 	}
 	return 0;
 }
