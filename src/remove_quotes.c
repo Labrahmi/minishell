@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/24 04:17:06 by macbook          ###   ########.fr       */
+/*   Updated: 2023/05/26 06:47:44 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_value(char *index, t_env **head_env)
 	node = *head_env;
 	while (node)
 	{
-		if (ft_strncmp(index, node->index, ft_strlen(index)) == 0)
+		if (ft_strncmp(index, node->index, ft_strlen(node->index)) == 0)
 			return (ft_strdup(node->value));
 		node = node->next;
 	}
