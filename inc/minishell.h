@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/22 05:05:01 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:20:50 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,34 @@ typedef struct s_user_data
 	char	*user_input;
 }   t_user_data;
 
+
+// - - - - - - - - - - - - - - 
+// typedef struct s_arguments
+// {
+// 	char				*content;
+// 	struct s_arguments	*next;
+// }	t_arguments;
+
+// - - - - - - - - - - - - - - 
+typedef struct s_command
+{
+	t_pre_tokens		*f_arg;
+	struct s_command	*next;
+	// char				*command_path;
+	// char				**command_args;
+	// int					quote_type;
+	// int					is_valid_command;
+	// int					is_input;
+	// char				*input_file;
+	// int					is_output;
+	// char				*output_file;
+	// int					is_appendn
+	// char				*append_file;
+	// int					is_herdoc;
+	// char				*herdoc_data;
+	// char				*herdoc_limiter;
+}	t_command;
+
 void			ft_error(char *message);
 void    		free_double(char **array);
 char    		*ft_colorize(char *message, char *color);
@@ -71,5 +99,5 @@ int				add_pre_t(t_pre_tokens **head, char *content);
 void			free_linked(t_pre_tokens **head);
 void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
 t_env			*ft_set_env(char **env);
-
-
+t_command		*ft_fill_commands(t_pre_tokens **head);
+void			printf_linked(t_pre_tokens *head);

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/26 06:47:44 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:30:59 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_value(char *index, t_env **head_env)
 	node = *head_env;
 	while (node)
 	{
-		if (ft_strncmp(index, node->index, ft_strlen(node->index)) == 0)
+		if (ft_strncmp(index, node->index, ft_strlen(node->index)) == 0 && (ft_strlen(index) == ft_strlen(node->index)))
 			return (ft_strdup(node->value));
 		node = node->next;
 	}

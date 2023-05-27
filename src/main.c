@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/24 17:03:40 by macbook          ###   ########.fr       */
+/*   Updated: 2023/05/27 23:17:27 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,20 @@ void printf_linked(t_pre_tokens *head)
 	{
 		printf("[%d] : %s\n", ++i, node->content);
 		node = node->next;
+	}
+}
+
+void	printf_commands(t_command *head)
+{
+	t_command		*temp_comm;
+
+	temp_comm = head;
+	printf("--------------------------\n");
+	while (temp_comm)
+	{
+		printf_linked(temp_comm->f_arg);
+		printf("--------------------------\n");
+		temp_comm = temp_comm->next;
 	}
 }
 
@@ -141,6 +155,21 @@ void	free_linked(t_pre_tokens **head)
 	}
 }
 
+void	free_commands(t_command **head)
+{
+	t_command	*command;
+	t_command	*command_next;
+
+	command = *head;
+	while (command)
+	{
+		command_next = command->next;
+		free(command);
+		free_linked(&(command->f_arg));
+		command = command_next;
+	}
+}
+
 void *ft_init_zeros(tokenizer_t *tok)
 {
 	tok->end = 0;
@@ -205,6 +234,7 @@ int main(int argc, char const *argv[], char **env)
 	t_pre_tokens	*head;
 	t_user_data		data;
 	t_env			*env_head;
+	t_command		*head_command;
 
 	env_head = ft_set_env(env);
 	while (1)
@@ -212,8 +242,9 @@ int main(int argc, char const *argv[], char **env)
 		data.user_input = ft_read_input();
 		head = ft_tokenizer(data.user_input);
 		ft_remove_quotes(&head, env_head);
-		printf_linked(head);
-		free_linked(&head);
+		head_command = ft_fill_commands(&head);
+		printf_commands(head_command);
+		free_commands(&head_command);
 		free(data.user_input);
 		print_leaks();
 	}
