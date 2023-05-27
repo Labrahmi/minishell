@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/26 19:20:50 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:22:29 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,22 @@ typedef struct s_user_data
 // - - - - - - - - - - - - - - 
 typedef struct s_command
 {
-	t_pre_tokens		*f_arg;
+	char				*cmd;
+	t_pre_tokens		*args;
 	struct s_command	*next;
 	// char				*command_path;
 	// char				**command_args;
+	// char				*input_file;
+	// char				*output_file;
+	// char				*append_file;
+	// char				*herdoc_data;
+	// char				*herdoc_limiter;
 	// int					quote_type;
 	// int					is_valid_command;
 	// int					is_input;
-	// char				*input_file;
-	// int					is_output;
-	// char				*output_file;
 	// int					is_appendn
-	// char				*append_file;
+	// int					is_output;
 	// int					is_herdoc;
-	// char				*herdoc_data;
-	// char				*herdoc_limiter;
 }	t_command;
 
 void			ft_error(char *message);
@@ -101,3 +102,11 @@ void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
 t_env			*ft_set_env(char **env);
 t_command		*ft_fill_commands(t_pre_tokens **head);
 void			printf_linked(t_pre_tokens *head);
+void			ft_lexer(t_command **head);
+
+
+
+/*
+	cases :
+		 "> out echo "hello" > in"
+*/

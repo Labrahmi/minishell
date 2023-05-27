@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/27 23:17:27 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:15:22 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf("[%d] : %s\n", ++i, node->content);
+		printf("[%s] ", node->content);
 		node = node->next;
 	}
+	printf("\n");
 }
 
 void	printf_commands(t_command *head)
@@ -74,7 +75,9 @@ void	printf_commands(t_command *head)
 	printf("--------------------------\n");
 	while (temp_comm)
 	{
-		printf_linked(temp_comm->f_arg);
+		printf("command : [%s]\n", temp_comm->cmd);
+		printf("arguments : ");
+		printf_linked(temp_comm->args);
 		printf("--------------------------\n");
 		temp_comm = temp_comm->next;
 	}
@@ -164,8 +167,9 @@ void	free_commands(t_command **head)
 	while (command)
 	{
 		command_next = command->next;
+		free_linked(&(command->args));
+		free(command->cmd);
 		free(command);
-		free_linked(&(command->f_arg));
 		command = command_next;
 	}
 }
@@ -243,6 +247,7 @@ int main(int argc, char const *argv[], char **env)
 		head = ft_tokenizer(data.user_input);
 		ft_remove_quotes(&head, env_head);
 		head_command = ft_fill_commands(&head);
+		ft_lexer(&head_command);
 		printf_commands(head_command);
 		free_commands(&head_command);
 		free(data.user_input);

@@ -6,13 +6,13 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:13:40 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/27 23:41:39 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:01:39 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_command	*helper(t_command **input)
+t_command	*get_last_command(t_command **input)
 {
 	t_command	*last_command;
 
@@ -34,7 +34,7 @@ t_pre_tokens	*add_to_command(t_pre_tokens *node, t_command **f_command)
 	if (!new_command)
 		return 0;
 	temp_node = node;
-	new_command->f_arg = node;
+	new_command->args = node;
 	new_command->next = NULL;
 	while (temp_node->next && (ft_strncmp(temp_node->next->content, "|", ft_strlen(temp_node->next->content)) != 0))
 		temp_node = temp_node->next;
@@ -45,7 +45,7 @@ t_pre_tokens	*add_to_command(t_pre_tokens *node, t_command **f_command)
 		*f_command = new_command;
 	else
 	{
-		last_command = helper(f_command);
+		last_command = get_last_command(f_command);
 		last_command->next = new_command;
 	}
 	return (ret_node);
