@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:13:40 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 00:47:29 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:38:11 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_command	*ft_fill_commands(t_pre_tokens **head)
 		while (node && (ft_strncmp(node->content, "|", ft_strlen(node->content)) == 0))
 		{
 			temp_to_next = node->next;
-			free(node);
 			free(node->content);
+			free(node);
 			node = temp_to_next;
 		}
 	}
