@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   free_double.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 10:41:51 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/23 22:10:07 by ylabrahm         ###   ########.fr       */
+/*   Created: 2023/05/05 12:02:58 by ylabrahm          #+#    #+#             */
+/*   Updated: 2023/05/28 00:47:32 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	ft_error(char *message)
+void    free_double(char **array)
 {
-	if (message)
-	{
-		printf("%s", message);
-		exit(1);
-	}
-	exit(0);
+	int i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
 }

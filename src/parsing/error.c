@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 23:50:51 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 00:07:28 by ylabrahm         ###   ########.fr       */
+/*   Created: 2023/05/05 10:41:51 by ylabrahm          #+#    #+#             */
+/*   Updated: 2023/05/28 00:47:26 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	ft_lexer(t_command **head)
+void	ft_error(char *message)
 {
-	t_command		*f_cmd;
-	t_pre_tokens	*temp_next;
-
-	f_cmd = *head;
-	while (f_cmd)
+	if (message)
 	{
-		temp_next = f_cmd->args->next;
-		f_cmd->cmd = ft_strdup(f_cmd->args->content);
-		free(f_cmd->args->content);
-		free(f_cmd->args);
-		f_cmd->args = temp_next;
-		f_cmd = f_cmd->next;
+		printf("%s", message);
+		exit(1);
 	}
+	exit(0);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pre_t.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:01:42 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/24 16:53:26 by macbook          ###   ########.fr       */
+/*   Updated: 2023/05/28 00:47:38 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void add_to_last(t_pre_tokens **head, t_pre_tokens *next_node)
 {

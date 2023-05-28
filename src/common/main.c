@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_double.c                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 12:02:58 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/05 12:05:58 by ylabrahm         ###   ########.fr       */
+/*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
+/*   Updated: 2023/05/28 01:14:33 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void    free_double(char **array)
+int main(int argc, char const *argv[])
 {
-	int i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
+	int	fd = open("out.txt", O_CREAT | O_RDONLY | O_WRONLY, 777);
+	dup2(fd, STDOUT_FILENO);
+	printf("Hello World 1\n");
+	close(fd);
+	return 0;
 }

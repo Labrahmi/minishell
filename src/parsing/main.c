@@ -6,11 +6,11 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 00:15:22 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 01:00:30 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	print_leaks()
 {
@@ -45,7 +45,7 @@ char *ft_read_input()
 	user_input = readline(prompt);
 	free(prompt);
 	if (!(user_input))
-		ft_error(NULL);
+		ft_error(0);
 	add_history(user_input);
 	trimed_value = ft_strtrim(user_input, " \t");
 	free(user_input);
@@ -176,11 +176,11 @@ void	free_commands(t_command **head)
 
 void *ft_init_zeros(tokenizer_t *tok)
 {
-	tok->end = 0;
+	tok->end = -1;
 	tok->start = 0;
 	tok->in_quotes = 0;
 	tok->in_double_quotes = 0;
-	return (NULL);
+	return (0);
 }
 
 int	ft_tokenizer_loop(tokenizer_t *tok)
@@ -188,7 +188,7 @@ int	ft_tokenizer_loop(tokenizer_t *tok)
 	int	ret;
 
 	ret = 0;
-	while (tok->user_input[tok->end] != '\0')
+	while (tok->user_input[++tok->end] != '\0')
 	{
 		if (tok->user_input[tok->end] == '\"' && !(tok->in_quotes))
 			tok->in_double_quotes = !(tok->in_double_quotes);
@@ -207,7 +207,6 @@ int	ft_tokenizer_loop(tokenizer_t *tok)
 				tok->start = tok->end + 1;
 			}
 		}
-		(tok->end)++;
 	}
 	ret += sub_and_add(tok->user_input, tok->start, tok->end, &tok->head);
 	return (ret);
@@ -227,7 +226,7 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 		printf("%s", error);
 		free(error);
 		free(tok.user_input);
-		return (NULL);
+		return (0);
 	}
 	free(tok.user_input);
 	return (tok.head);

@@ -6,19 +6,25 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/05/28 00:07:58 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/05/28 00:55:58 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS = 	./src/main.c ./src/error.c \
-		./src/colorize.c ./src/free_double.c \
-		./src/pre_t.c ./src/remove_quotes.c \
-		./src/set_env.c ./src/fill_commands.c \
-		./src/lexer.c
+PARS_NAME = minishell_parsing
 
-OBJS = $(SRCS:.c=.o)
+COMM_SRCS = ./src/common/main.c
+
+PARS_SRCS = ./src/parsing/main.c ./src/parsing/error.c \
+			./src/parsing/colorize.c ./src/parsing/free_double.c \
+			./src/parsing/pre_t.c ./src/parsing/remove_quotes.c \
+			./src/parsing/set_env.c ./src/parsing/fill_commands.c \
+			./src/parsing/lexer.c
+
+PARS_OBJS = $(PARS_SRCS:.c=.o)
+
+COMM_OBJS = $(COMM_SRCS:.c=.o)
 
 CC = cc
 
@@ -29,16 +35,22 @@ RM = rm -f
 
 all:	$(NAME)
 
-$(NAME):	$(OBJS) 
+$(NAME):	$(COMM_OBJS) 
 	@make -C ./inc/libft/
-	$(CC) $(CFLAGS) ./inc/libft/libft.a $(OBJS) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) ./inc/libft/libft.a $(COMM_OBJS) -lreadline -o $(NAME)
+
+pars:		$(PARS_OBJS)
+	@make -C ./inc/libft/
+	$(CC) $(CFLAGS) ./inc/libft/libft.a $(PARS_OBJS) -lreadline -o $(PARS_NAME)
 
 clean:
 	@make clean -C ./inc/libft/
-	$(RM) $(OBJS) 
+	$(RM) $(PARS_OBJS)
+	$(RM) $(COMM_OBJS)
 
 fclean:	clean
 	@make fclean -C ./inc/libft/
 	$(RM) $(NAME)
+	$(RM) $(PARS_NAME)
 
 re:	fclean all

@@ -6,11 +6,11 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:52:43 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/22 05:38:26 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:47:15 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char	*ft_get_color(char *message, char *color_tag)
 {

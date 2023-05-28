@@ -6,11 +6,11 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 01:03:21 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/22 05:11:56 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:47:42 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char	*ft_get_index(char *env_one)
 {
