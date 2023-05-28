@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 01:00:30 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 01:44:44 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,25 +232,37 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	return (tok.head);
 }
 
-int main(int argc, char const *argv[], char **env)
+t_command	*get_first_command(char *user_input, t_env *env_head)
 {
-	t_pre_tokens	*head;
-	t_user_data		data;
-	t_env			*env_head;
+	t_pre_tokens	*head_args;
 	t_command		*head_command;
 
-	env_head = ft_set_env(env);
-	while (1)
-	{
-		data.user_input = ft_read_input();
-		head = ft_tokenizer(data.user_input);
-		ft_remove_quotes(&head, env_head);
-		head_command = ft_fill_commands(&head);
-		ft_lexer(&head_command);
-		printf_commands(head_command);
-		free_commands(&head_command);
-		free(data.user_input);
-		print_leaks();
-	}
-	return 0;
+	head_args = ft_tokenizer(user_input);
+	ft_remove_quotes(&head_args, env_head);
+	head_command = ft_fill_commands(&head_args);
+	ft_lexer(&head_command);
+	return (head_command);
 }
+
+// int main(int argc, char const *argv[], char **env)
+// {
+// 	t_pre_tokens	*head;
+// 	t_user_data		data;
+// 	t_env			*env_head;
+// 	t_command		*head_command;
+
+// 	env_head = ft_set_env(env);
+// 	while (1)
+// 	{
+// 		data.user_input = ft_read_input();
+// 		head = ft_tokenizer(data.user_input);
+// 		ft_remove_quotes(&head, env_head);
+// 		head_command = ft_fill_commands(&head);
+// 		ft_lexer(&head_command);
+// 		printf_commands(head_command);
+// 		free_commands(&head_command);
+// 		free(data.user_input);
+// 		print_leaks();
+// 	}
+// 	return 0;
+// }

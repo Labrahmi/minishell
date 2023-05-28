@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 00:22:29 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 01:47:08 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,21 @@ t_env			*ft_set_env(char **env);
 t_command		*ft_fill_commands(t_pre_tokens **head);
 void			printf_linked(t_pre_tokens *head);
 void			ft_lexer(t_command **head);
+t_pre_tokens	*ft_tokenizer(char *user_input);
+int				ft_tokenizer_loop(tokenizer_t *tok);
+void 			*ft_init_zeros(tokenizer_t *tok);
+void			free_commands(t_command **head);
+void			free_linked(t_pre_tokens **head);
+int				add_symbol(t_pre_tokens **head, char *user_input, int start, int *end);
+int				is_symbol(char symbol);
+int				sub_and_add(char *user_input, int start, int end, t_pre_tokens **head);
+void			printf_env(t_env *head);
+void			printf_commands(t_command *head);
+void			printf_linked(t_pre_tokens *head);
+char			*ft_read_input();
+int 			ft_cnt(char *string);
+void			print_leaks();
+t_command		*get_first_command(char *user_input, t_env *env_head);
 
 
 
