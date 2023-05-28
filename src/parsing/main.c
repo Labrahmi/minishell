@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 15:38:26 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:47:03 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char *ft_read_input()
 	char *user_input;
 	char *trimed_value;
 
-	prompt = ft_colorize("monoshell-1.0> ", "green");
+	prompt = ft_colorize(ft_strdup("monoshell-1.0> "), "green");
 	user_input = readline(prompt);
 	free(prompt);
 	if (!(user_input))
@@ -50,6 +50,37 @@ char *ft_read_input()
 	trimed_value = ft_strtrim(user_input, " \t");
 	free(user_input);
 	return (trimed_value);
+}
+
+char	*say_type(enum token_type type)
+{
+	switch (type)
+	{
+		case TYPE_ARG:
+			return ("_____Argument_____");
+		break;
+		// - - - - -
+		case TYPE_RED_IN:
+			return ("_Input-Redirection");
+		break;
+		// - - - - -
+		case TYPE_RED_OUT:
+			return ("Output-Redirection");
+		break;
+		// - - - - -
+		case TYPE_RED_APP:
+			return ("___Append-Output__");
+		break;
+		// - - - - -
+		case TYPE_RED_HER:
+			return ("___Here-Document__");
+		break;
+		// - - - - -
+		case TYPE_RED_PIP:
+			return ("________Pip_______");
+		break;
+		// - - - - -
+	}
 }
 
 void printf_linked(t_pre_tokens *head)
@@ -61,7 +92,7 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf("[%s] ", node->content);
+		printf("(%s) : %s\n",say_type(node->type), node->content);
 		node = node->next;
 	}
 	printf("\n");
@@ -76,7 +107,6 @@ void	printf_commands(t_command *head)
 	while (temp_comm)
 	{
 		printf("command : [%s]\n", temp_comm->cmd);
-		printf("arguments : ");
 		printf_linked(temp_comm->args);
 		printf("--------------------------\n");
 		temp_comm = temp_comm->next;
@@ -222,9 +252,7 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	if (ft_tokenizer_loop(&tok) != 0)
 	{
 		free_linked(&(tok.head));
-		error = ft_colorize("Error: missing quote\n", "red");
-		printf("%s", error);
-		free(error);
+		print_error("parsing error\n");
 		free(tok.user_input);
 		return (0);
 	}
@@ -236,10 +264,13 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 {
 	t_pre_tokens	*head_args;
 	t_command		*head_command;
+	char			*error;
 
 	head_args = ft_tokenizer(user_input);
 	ft_remove_quotes(&head_args, env_head);
-	head_command = ft_fill_commands(&head_args);
+	if (valid_arguments(&head_args) == 1)
+		return (NULL);
+	head_command = ft_fill_commands(&head_args);	
 	ft_lexer(&head_command);
 	return (head_command);
 }

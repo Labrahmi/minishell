@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 01:47:08 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:09:27 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 
 enum token_type
 {
-	_CMD,
-	_SYM,
-	_ARG,
-	_FLG,
+	TYPE_ARG,
+	TYPE_RED_IN,
+	TYPE_RED_OUT,
+	TYPE_RED_APP,
+	TYPE_RED_HER,
+	TYPE_RED_PIP,
 };
 
 typedef struct s_env
@@ -94,8 +96,8 @@ typedef struct s_command
 }	t_command;
 
 void			ft_error(char *message);
-void    		free_double(char **array);
-char    		*ft_colorize(char *message, char *color);
+void			free_double(char **array);
+char			*ft_colorize(char *message, char *color);
 int				add_pre_t(t_pre_tokens **head, char *content);
 void			free_linked(t_pre_tokens **head);
 void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
@@ -118,8 +120,8 @@ char			*ft_read_input();
 int 			ft_cnt(char *string);
 void			print_leaks();
 t_command		*get_first_command(char *user_input, t_env *env_head);
-
-
+int				valid_arguments(t_pre_tokens **head_args);
+void			print_error(char *error_msg);
 
 /*
 	cases :
