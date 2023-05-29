@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/29 04:15:01 by macbook          ###   ########.fr       */
+/*   Updated: 2023/05/29 04:29:05 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int main(int argc, char const *argv[], char **env)
 		printf_commands(head_command);
 		free_commands(&head_command);
 		free(data.user_input);
-		print_leaks();
+		// print_leaks();
 	}
 	return 0;
 }

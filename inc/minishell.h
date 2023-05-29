@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 19:09:27 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/29 05:10:41 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ typedef struct s_command
 {
 	char				*cmd;
 	t_pre_tokens		*args;
+	t_pre_tokens		*output_files;
+	t_pre_tokens		*input_files;
+	t_pre_tokens		*append_files;
+	t_pre_tokens		*herdoc_files;
 	struct s_command	*next;
 	// char				*command_path;
 	// char				**command_args;
@@ -121,6 +125,7 @@ int 			ft_cnt(char *string);
 void			print_leaks();
 t_command		*get_first_command(char *user_input, t_env *env_head);
 int				valid_arguments(t_pre_tokens **head_args);
+int				valid_commands(t_command **head_commands);
 void			print_error(char *error_msg);
 
 /*

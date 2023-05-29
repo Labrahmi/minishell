@@ -6,7 +6,7 @@
 #    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/05/29 04:19:41 by macbook          ###   ########.fr        #
+#    Updated: 2023/05/29 04:26:28 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ PARS_SRCS = ./src/parsing/get_first_command.c ./src/parsing/error.c \
 			./src/parsing/pre_t.c ./src/parsing/remove_quotes.c \
 			./src/parsing/set_env.c ./src/parsing/fill_commands.c \
 			./src/parsing/lexer.c ./src/parsing/valid_arguments.c \
-			./src/parsing/print_error.c
+			./src/parsing/print_error.c ./src/parsing/valid_commands.c
 
 PARS_OBJS = $(PARS_SRCS:.c=.o)
 

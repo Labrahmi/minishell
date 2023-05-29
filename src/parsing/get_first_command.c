@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_first_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/29 04:19:10 by macbook          ###   ########.fr       */
+/*   Updated: 2023/05/29 04:52:44 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,9 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 	ft_remove_quotes(&head_args, env_head);
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);
-	head_command = ft_fill_commands(&head_args);	
+	head_command = ft_fill_commands(&head_args);
+	if (valid_commands(&head_command) == 1)
+		return (NULL);
 	ft_lexer(&head_command);
 	return (head_command);
 }
