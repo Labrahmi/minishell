@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/05/28 19:08:27 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/05/29 04:19:41 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ PARS_NAME = minishell_parsing
 
 COMM_SRCS = ./src/common/main.c
 
-PARS_SRCS = ./src/parsing/main.c ./src/parsing/error.c \
+PARS_SRCS = ./src/parsing/get_first_command.c ./src/parsing/error.c \
 			./src/parsing/colorize.c ./src/parsing/free_double.c \
 			./src/parsing/pre_t.c ./src/parsing/remove_quotes.c \
 			./src/parsing/set_env.c ./src/parsing/fill_commands.c \

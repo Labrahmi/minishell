@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 16:20:16 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/29 04:14:30 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,8 @@ char	*remove_quote(t_pre_tokens *node)
 		i++;
 	}
 	copy[j] = '\0';
-	free(node->content);
 	set_node_type(&node, contain_quotes);
+	free(node->content);
 	return (copy);
 }
 

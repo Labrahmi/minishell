@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 19:47:03 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/29 04:19:10 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,26 +274,3 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 	ft_lexer(&head_command);
 	return (head_command);
 }
-
-// int main(int argc, char const *argv[], char **env)
-// {
-// 	t_pre_tokens	*head;
-// 	t_user_data		data;
-// 	t_env			*env_head;
-// 	t_command		*head_command;
-
-// 	env_head = ft_set_env(env);
-// 	while (1)
-// 	{
-// 		data.user_input = ft_read_input();
-// 		head = ft_tokenizer(data.user_input);
-// 		ft_remove_quotes(&head, env_head);
-// 		head_command = ft_fill_commands(&head);
-// 		ft_lexer(&head_command);
-// 		printf_commands(head_command);
-// 		free_commands(&head_command);
-// 		free(data.user_input);
-// 		print_leaks();
-// 	}
-// 	return 0;
-// }
