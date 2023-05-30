@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_first_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/29 04:52:44 by macbook          ###   ########.fr       */
+/*   Updated: 2023/05/29 19:25:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf("(%s) : %s\n",say_type(node->type), node->content);
+		printf("[%s]", node->content);
 		node = node->next;
 	}
 	printf("\n");
@@ -100,14 +100,29 @@ void printf_linked(t_pre_tokens *head)
 
 void	printf_commands(t_command *head)
 {
-	t_command		*temp_comm;
+	t_command	*temp_comm;
 
 	temp_comm = head;
 	printf("--------------------------\n");
 	while (temp_comm)
 	{
-		printf("command : [%s]\n", temp_comm->cmd);
+		printf("command : [%s]\n\n", temp_comm->cmd);
+		// 
+		printf("Args : ");
 		printf_linked(temp_comm->args);
+		// 
+		printf("Out-Files : ");
+		printf_linked(temp_comm->output_files);
+		// 
+		printf("In-Files : ");
+		printf_linked(temp_comm->input_files);
+		// 
+		printf("Append-Files : ");
+		printf_linked(temp_comm->append_files);
+		// 
+		printf("Herdoc-Files : ");
+		printf_linked(temp_comm->herdoc_files);
+		// 
 		printf("--------------------------\n");
 		temp_comm = temp_comm->next;
 	}
@@ -198,6 +213,10 @@ void	free_commands(t_command **head)
 	{
 		command_next = command->next;
 		free_linked(&(command->args));
+		free_linked(&(command->input_files));
+		free_linked(&(command->output_files));
+		free_linked(&(command->append_files));
+		free_linked(&(command->herdoc_files));
 		free(command->cmd);
 		free(command);
 		command = command_next;
@@ -272,7 +291,9 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 		return (NULL);
 	head_command = ft_fill_commands(&head_args);
 	if (valid_commands(&head_command) == 1)
+	{
 		return (NULL);
+	}
 	ft_lexer(&head_command);
 	return (head_command);
 }

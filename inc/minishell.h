@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/29 05:10:41 by macbook          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:33:47 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ typedef struct s_command
 	// int					is_output;
 	// int					is_herdoc;
 }	t_command;
+
+// ls -la arg1 arg2 > out > in > here g > hey > heeey
 
 void			ft_error(char *message);
 void			free_double(char **array);
