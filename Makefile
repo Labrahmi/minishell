@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/05/29 16:04:13 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/05/31 01:25:27 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ all:	$(NAME)
 
 $(NAME):	$(COMM_OBJS) $(PARS_OBJS)
 	@make -C ./inc/libft/
-	$(CC) $(CFLAGS) ./inc/libft/libft.a $(COMM_OBJS) $(PARS_OBJS) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS)  ./inc/libft/libft.a $(COMM_OBJS) $(PARS_OBJS) -lreadline -o $(NAME)
 
 pars:		$(PARS_OBJS)
 	@make -C ./inc/libft/

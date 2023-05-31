@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/29 15:33:47 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/31 01:45:35 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_pre_tokens
 	char				*content;
 	enum token_type		type;
 	struct s_pre_tokens	*next;
+	struct s_pre_tokens	*prev;
 }	t_pre_tokens;
 
 typedef struct tokenizer_s

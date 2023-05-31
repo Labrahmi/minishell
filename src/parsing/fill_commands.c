@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:13:40 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 15:38:11 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/31 01:02:04 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,13 @@ t_pre_tokens	*add_to_command(t_pre_tokens *node, t_command **f_command)
 		return 0;
 	temp_node = node;
 	new_command->args = node;
+	new_command->args->prev = NULL;
 	new_command->next = NULL;
+	new_command->cmd = NULL;
+	new_command->output_files = NULL;
+	new_command->input_files = NULL;
+	new_command->append_files = NULL;
+	new_command->herdoc_files = NULL;
 	while (temp_node->next && (ft_strncmp(temp_node->next->content, "|", ft_strlen(temp_node->next->content)) != 0))
 		temp_node = temp_node->next;
 	ret_node = temp_node->next;

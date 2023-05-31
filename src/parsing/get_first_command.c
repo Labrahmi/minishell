@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_first_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/29 19:25:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/31 02:47:44 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf("[%s]", node->content);
+		printf("[%s] ", node->content);
 		node = node->next;
 	}
 	printf("\n");
@@ -106,23 +106,17 @@ void	printf_commands(t_command *head)
 	printf("--------------------------\n");
 	while (temp_comm)
 	{
-		printf("command : [%s]\n\n", temp_comm->cmd);
-		// 
+		printf("command : [%s]\n", temp_comm->cmd);
 		printf("Args : ");
 		printf_linked(temp_comm->args);
-		// 
 		printf("Out-Files : ");
 		printf_linked(temp_comm->output_files);
-		// 
 		printf("In-Files : ");
 		printf_linked(temp_comm->input_files);
-		// 
 		printf("Append-Files : ");
 		printf_linked(temp_comm->append_files);
-		// 
 		printf("Herdoc-Files : ");
 		printf_linked(temp_comm->herdoc_files);
-		// 
 		printf("--------------------------\n");
 		temp_comm = temp_comm->next;
 	}
@@ -292,6 +286,7 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 	head_command = ft_fill_commands(&head_args);
 	if (valid_commands(&head_command) == 1)
 	{
+		free_commands(&head_command);
 		return (NULL);
 	}
 	ft_lexer(&head_command);

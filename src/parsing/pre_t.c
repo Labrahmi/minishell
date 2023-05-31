@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:01:42 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/28 00:47:38 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:27:20 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 void add_to_last(t_pre_tokens **head, t_pre_tokens *next_node)
 {
 	t_pre_tokens *node;
+	t_pre_tokens *prev;
 
 	if (*head)
 	{
 		node = *head;
 		while (node->next)
 			node = node->next;
+		prev = node;
 		node->next = next_node;
+		next_node->prev = prev;
 	}
 	else
+	{
 		*head = next_node;
+	}
 }
 
 void	check_loop(t_check_arg *arg)
@@ -89,6 +94,7 @@ int add_pre_t(t_pre_tokens **head, char *content)
 	{
 		created_node->content = ft_strdup(content);
 		created_node->next = NULL;
+		created_node->prev = NULL;
 		add_to_last(head, created_node);
 	}
 	else
