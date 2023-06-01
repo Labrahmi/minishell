@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/31 17:13:53 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/01 14:48:04 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,28 +76,41 @@ typedef struct s_user_data
 // }	t_arguments;
 
 // - - - - - - - - - - - - - - 
+// typedef struct s_command
+// {
+// 	char				*cmd;
+// 	t_pre_tokens		*args;
+// 	t_pre_tokens		*output_files;
+// 	t_pre_tokens		*input_files;
+// 	t_pre_tokens		*append_files;
+// 	t_pre_tokens		*herdoc_files;
+// 	struct s_command	*next;
+// 	// char				*command_path;
+// 	// char				**command_args;
+// 	// char				*input_file;
+// 	// char				*output_file;
+// 	// char				*append_file;
+// 	// char				*herdoc_data;
+// 	// char				*herdoc_limiter;
+// 	// int					quote_type;
+// 	// int					is_valid_command;
+// 	// int					is_input;
+// 	// int					is_appendn
+// 	// int					is_output;
+// 	// int					is_herdoc;
+// }	t_command;
+
 typedef struct s_command
 {
-	char				*cmd;
-	t_pre_tokens		*args;
-	t_pre_tokens		*output_files;
-	t_pre_tokens		*input_files;
-	t_pre_tokens		*append_files;
-	t_pre_tokens		*herdoc_files;
-	struct s_command	*next;
-	// char				*command_path;
-	// char				**command_args;
-	// char				*input_file;
-	// char				*output_file;
-	// char				*append_file;
-	// char				*herdoc_data;
-	// char				*herdoc_limiter;
-	// int					quote_type;
-	// int					is_valid_command;
-	// int					is_input;
-	// int					is_appendn
-	// int					is_output;
-	// int					is_herdoc;
+		char				*cmd;
+		t_pre_tokens		*args;
+		t_pre_tokens		*output_files;
+		t_pre_tokens		*input_files;
+		t_pre_tokens		*append_files;
+		t_pre_tokens		*herdoc_files;
+		char				**db_args;
+		char				*path;
+		struct s_command	*next;
 }	t_command;
 
 // ls -la arg1 arg2 > out > in > here g > hey > heeey
@@ -130,6 +143,19 @@ t_command		*get_first_command(char *user_input, t_env *env_head);
 int				valid_arguments(t_pre_tokens **head_args);
 int				valid_commands(t_command **head_commands);
 void			print_error(char *error_msg);
+// 
+void			conver_l_args_to_p(t_command *head_command);
+char			**get_path(char **envp);
+void			set_path(t_command *head_command, char **env);
+int				calculate_num_of_cmd(t_command *all_cmd);
+int				calculate_number_of_args_in_node(t_command *all_cmd);
+int				calculate_len_of_w(t_command *all_cmd, int i);
+void			fill(t_command *all_cmd, int i, char *ev_word);
+void			fill_it(char **arr_of_ev_cmd, t_command *all_cmd);
+void			fill_arr_of_all(char ***arr_of_all_cmd, t_command *all_cmd);
+char			***convert_linked_list_to_tr_p(t_command *head_command);
+void			exec(char ***all_cmd, t_command *head, char **envp);
+
 
 /*
 	cases :
