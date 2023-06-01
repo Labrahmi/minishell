@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/05/31 02:37:21 by macbook          ###   ########.fr       */
+/*   Updated: 2023/06/01 00:17:01 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	add_returned_to_files(char *data, t_command **command_ix, int ret_type)
 	command = *command_ix;
 	/* TYPE_RED_OUT */
 	if (ret_type == TYPE_RED_OUT)
-		add_pre_t(&(command->output_files), data);
+		add_pre_t(&(command->output_files), data, 1);
 	/* TYPE_RED_IN */
 	if (ret_type == TYPE_RED_IN)
-		add_pre_t(&(command->input_files), data);
+		add_pre_t(&(command->input_files), data, 1);
 	/* TYPE_RED_APP */
 	if (ret_type == TYPE_RED_APP)
-		add_pre_t(&(command->append_files), data);
+		add_pre_t(&(command->append_files), data, 1);
 	/* TYPE_RED_HER */
 	if (ret_type == TYPE_RED_HER)
-		add_pre_t(&(command->herdoc_files), data);
+		add_pre_t(&(command->herdoc_files), data, 1);
 	free(data);
 }
 
@@ -76,7 +76,7 @@ t_pre_tokens	*ft_set_files(t_command **commands_ix)
 				node = node->next;
 				continue;
 			}
-			add_pre_t(&new_arguments, node->content);
+			add_pre_t(&new_arguments, node->content, 1);
 		}
 		node = node->next;
 	}
@@ -85,8 +85,9 @@ t_pre_tokens	*ft_set_files(t_command **commands_ix)
 
 int valid_commands(t_command **head_commands)
 {
-	int			ret;
-	t_command	*command;
+	int				ret;
+	t_command		*command;
+	t_pre_tokens	*temp;
 
 	ret = 0;
 	command = *head_commands;
@@ -103,8 +104,6 @@ int valid_commands(t_command **head_commands)
 	command = *head_commands;
 	while (command)
 	{
-		t_pre_tokens	*temp;
-
 		temp = command->args;
 		command->args = ft_set_files(&command);
 		free_linked(&temp);

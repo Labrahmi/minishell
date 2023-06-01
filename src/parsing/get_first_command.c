@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_first_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/05/31 02:47:44 by macbook          ###   ########.fr       */
+/*   Updated: 2023/06/01 01:45:00 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,21 @@ char	*say_type(enum token_type type)
 		case TYPE_ARG:
 			return ("_____Argument_____");
 		break;
-		// - - - - -
 		case TYPE_RED_IN:
 			return ("_Input-Redirection");
 		break;
-		// - - - - -
 		case TYPE_RED_OUT:
 			return ("Output-Redirection");
 		break;
-		// - - - - -
 		case TYPE_RED_APP:
 			return ("___Append-Output__");
 		break;
-		// - - - - -
 		case TYPE_RED_HER:
 			return ("___Here-Document__");
 		break;
-		// - - - - -
 		case TYPE_RED_PIP:
 			return ("________Pip_______");
 		break;
-		// - - - - -
 	}
 }
 
@@ -92,7 +86,7 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf("[%s] ", node->content);
+		printf("[%s]", node->content);
 		node = node->next;
 	}
 	printf("\n");
@@ -141,7 +135,7 @@ int	sub_and_add(char *user_input, int start, int end, t_pre_tokens **head)
 
 	ret = 0;
 	sub = ft_substr(user_input, start, end - start);
-	ret = add_pre_t(head, sub);
+	ret = add_pre_t(head, sub, 0);
 	free(sub);
 	return (ret);
 }
@@ -177,7 +171,7 @@ int	add_symbol(t_pre_tokens **head, char *user_input, int start, int *end)
 			(*end)++;
 		}
 	}
-	ret = add_pre_t(head, symbole_to_add);
+	ret = add_pre_t(head, symbole_to_add, 0);
 	free(symbole_to_add);
 	return (ret);
 }
