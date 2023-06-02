@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/02 15:57:30 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:46:57 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ int main(int argc, char const *argv[], char **env)
 	{
 		data.user_input = ft_read_input();
 		head_command = get_first_command(data.user_input, env_head);
-		conver_l_args_to_p(head_command);
-		set_path(head_command, env);
-		all_cmd = convert_linked_list_to_tr_p(head_command);
-		exec(all_cmd, head_command, env);
-		// printf_commands(head_command);
+		ft_echo(&(head_command->args));
+		// conver_l_args_to_p(head_command);
+		// set_path(head_command, env);
+		// all_cmd = convert_linked_list_to_tr_p(head_command);
+		// exec(all_cmd, head_command, env);
+		// // printf_commands(head_command);
 		free_commands(&head_command);
 		free(data.user_input);
 		// usleep(50000);print_leaks();
