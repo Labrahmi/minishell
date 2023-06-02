@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/01 14:48:04 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:55:41 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_pre_tokens
 {
 	char				*content;
 	enum token_type		type;
+	int					contain_quotes;
 	struct s_pre_tokens	*next;
 	struct s_pre_tokens	*prev;
 }	t_pre_tokens;
@@ -119,6 +120,9 @@ void			ft_error(char *message);
 void			free_double(char **array);
 char			*ft_colorize(char *message, char *color);
 int				add_pre_t(t_pre_tokens **head, char *content, int state);
+
+int				add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node);
+
 void			free_linked(t_pre_tokens **head);
 void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
 t_env			*ft_set_env(char **env);

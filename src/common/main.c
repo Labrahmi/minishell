@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/01 14:50:34 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:57:30 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int argc, char const *argv[], char **env)
 	t_env			*env_head;
 	t_command		*head_command;
 	char			***all_cmd;
-	
+
 	env_head = ft_set_env(env);
 	while (1)
 	{
