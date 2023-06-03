@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/04 00:07:55 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:12:12 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,3 +159,4 @@ char			***convert_linked_list_to_tr_p(t_command *head_command);
 void			exec(char ***all_cmd, t_command *head, char **envp);
 // builtsins
 int				ft_echo(t_command *command);
+void			ft_exit();
