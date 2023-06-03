@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:13:40 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/01 01:41:17 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:21:04 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ t_command	*get_last_command(t_command **input)
 	return (last_command);
 }
 
-void	set_null_memeber(t_command **command)
+void	set_null_memeber(t_command **command, int state)
 {
 	t_command	*new_command;
 
-	new_command = *command;
-	new_command->args->prev = NULL;
+	if (state)
+	{
+		new_command = *command;
+		new_command->args->prev = NULL;
+	}
 	new_command->next = NULL;
 	new_command->cmd = NULL;
 	new_command->output_files = NULL;
@@ -49,7 +52,7 @@ t_pre_tokens	*add_to_command(t_pre_tokens *node, t_command **f_command)
 		return 0;
 	temp_node = node;
 	new_command->args = node;
-	set_null_memeber(&new_command);
+	set_null_memeber(&new_command, 1);
 	while ((temp_node->next) && (temp_node->next->type != TYPE_RED_PIP))
 		temp_node = temp_node->next;
 	ret_node = temp_node->next;

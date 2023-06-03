@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/02 15:52:18 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/03 23:26:35 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,11 +278,14 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);
 	head_command = ft_fill_commands(&head_args);
-	if (valid_commands(&head_command) == 1)
+	if (head_command)
 	{
-		free_commands(&head_command);
-		return (NULL);
+		if (valid_commands(&head_command) == 1)
+		{
+			free_commands(&head_command);
+			return (NULL);
+		}
+		ft_lexer(&head_command);
 	}
-	ft_lexer(&head_command);
 	return (head_command);
 }

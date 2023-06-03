@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 00:22:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/02 17:39:38 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:09:32 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_args(t_pre_tokens *args)
 	}
 }
 
-int	ft_echo(t_pre_tokens **args_head)
+int	ft_echo(t_command *command)
 {
 	int				ret;
 	int				i;
@@ -50,7 +50,7 @@ int	ft_echo(t_pre_tokens **args_head)
 	t_pre_tokens	*args;
 
 	set_zeros(&ret, &is_n, &inv_flag);
-	args = *args_head;
+	args = command->args;
 	while (args && args->content[0] == '-')
 	{
 		i = 0;
@@ -64,7 +64,7 @@ int	ft_echo(t_pre_tokens **args_head)
 		args = args->next;
 	}
 	if (inv_flag)
-		args = *args_head;
+		args = command->args;
 	print_args(args);
 	print_new_line(inv_flag, is_n);
 	return (ret);

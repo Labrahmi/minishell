@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/02 16:23:01 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:52:46 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_user_data
 typedef struct s_command
 {
 		char				*cmd;
+		int					cmd_type;
 		t_pre_tokens		*args;
 		t_pre_tokens		*output_files;
 		t_pre_tokens		*input_files;
@@ -162,8 +163,7 @@ void			exec(char ***all_cmd, t_command *head, char **envp);
 
 
 // builtsins
-int				ft_echo(t_pre_tokens **args_head);
-
+int				ft_echo(t_command *command);
 
 
 /*
