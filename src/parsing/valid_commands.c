@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/02 15:56:01 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:05:26 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,26 @@ void	add_returned_to_files(char *data, t_command **command_ix, int ret_type)
 	t_command	*command;
 
 	command = *command_ix;
-	/* TYPE_RED_OUT */
 	if (ret_type == TYPE_RED_OUT)
+	{
 		add_pre_t_2(&(command->output_files), data, NULL);
-	/* TYPE_RED_IN */
+		command->out_type = 1;
+	}
 	if (ret_type == TYPE_RED_IN)
+	{
 		add_pre_t_2(&(command->input_files), data, NULL);
-	/* TYPE_RED_APP */
+		command->in_type = 1;
+	}
 	if (ret_type == TYPE_RED_APP)
+	{
 		add_pre_t_2(&(command->append_files), data, NULL);
-	/* TYPE_RED_HER */
+		command->out_type = 2;
+	}
 	if (ret_type == TYPE_RED_HER)
+	{
 		add_pre_t_2(&(command->herdoc_files), data, NULL);
+		command->in_type = 2;
+	}
 	free(data);
 }
 

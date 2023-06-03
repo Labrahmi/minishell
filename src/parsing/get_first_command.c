@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/03 23:26:35 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:04:09 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ void	printf_commands(t_command *head)
 		printf("Herdoc-Files : ");
 		printf_linked(temp_comm->herdoc_files);
 		printf("--------------------------\n");
+
+		printf("out_type : %d\n", temp_comm->out_type);
+		printf("--------------------------\n");
+
+		printf("in_type : %d\n", temp_comm->in_type);
 		temp_comm = temp_comm->next;
 	}
 }

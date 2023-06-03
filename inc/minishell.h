@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/03 19:52:46 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:07:55 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_user_data
 // 	// int					is_output;
 // 	// int					is_herdoc;
 // }	t_command;
-
+// echo hello > 1 > 2 > 3 < 4 << 5 >> 6 < 7 > 8 < 9
 typedef struct s_command
 {
 		char				*cmd;
@@ -110,20 +110,18 @@ typedef struct s_command
 		t_pre_tokens		*input_files;
 		t_pre_tokens		*append_files;
 		t_pre_tokens		*herdoc_files;
+		int					out_type;
+		int					in_type;
 		char				**db_args;
 		char				*path;
 		struct s_command	*next;
 }	t_command;
 
-// ls -la arg1 arg2 > out > in > here g > hey > heeey
-
 void			ft_error(char *message);
 void			free_double(char **array);
 char			*ft_colorize(char *message, char *color);
 int				add_pre_t(t_pre_tokens **head, char *content, int state);
-
 int				add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node);
-
 void			free_linked(t_pre_tokens **head);
 void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
 t_env			*ft_set_env(char **env);
@@ -148,7 +146,6 @@ t_command		*get_first_command(char *user_input, t_env *env_head);
 int				valid_arguments(t_pre_tokens **head_args);
 int				valid_commands(t_command **head_commands);
 void			print_error(char *error_msg);
-// 
 void			conver_l_args_to_p(t_command *head_command);
 char			**get_path(char **envp);
 void			set_path(t_command *head_command, char **env);
@@ -160,13 +157,5 @@ void			fill_it(char **arr_of_ev_cmd, t_command *all_cmd);
 void			fill_arr_of_all(char ***arr_of_all_cmd, t_command *all_cmd);
 char			***convert_linked_list_to_tr_p(t_command *head_command);
 void			exec(char ***all_cmd, t_command *head, char **envp);
-
-
 // builtsins
 int				ft_echo(t_command *command);
-
-
-/*
-	cases :
-		 "> out echo "hello" > in"
-*/
