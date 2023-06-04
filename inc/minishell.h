@@ -6,12 +6,13 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/04 00:12:12 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/04 01:37:32 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
