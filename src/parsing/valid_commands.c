@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/04 00:05:26 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:18:31 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,19 @@ int valid_commands(t_command **head_commands)
 			print_error("parsing error\n");
 			return (1);
 		}
-		command = command->next;
-	}
-	command = *head_commands;
-	while (command)
-	{
 		temp = command->args;
 		command->args = ft_set_files(&command);
 		free_linked(&temp);
+		ft_read_heredoc(&command);
 		command = command->next;
 	}
+	// command = *head_commands;
+	// while (command)
+	// {
+	// 	temp = command->args;
+	// 	command->args = ft_set_files(&command);
+	// 	free_linked(&temp);
+	// 	command = command->next;
+	// }
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/04 00:04:09 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:34:59 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,12 @@ void	printf_commands(t_command *head)
 		printf("Herdoc-Files : ");
 		printf_linked(temp_comm->herdoc_files);
 		printf("--------------------------\n");
-
+		printf("here_data :\n%s", temp_comm->here_doc_data);
+		printf("--------------------------\n");
 		printf("out_type : %d\n", temp_comm->out_type);
 		printf("--------------------------\n");
-
 		printf("in_type : %d\n", temp_comm->in_type);
+		printf("--------------------------\n");
 		temp_comm = temp_comm->next;
 	}
 }
@@ -210,6 +211,7 @@ void	free_commands(t_command **head)
 		free_linked(&(command->output_files));
 		free_linked(&(command->append_files));
 		free_linked(&(command->herdoc_files));
+		free(command->here_doc_data);
 		free(command->cmd);
 		free(command);
 		command = command_next;
@@ -291,6 +293,7 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 			return (NULL);
 		}
 		ft_lexer(&head_command);
+		// ft_read_heredoc(&head_command);
 	}
 	return (head_command);
 }

@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/06/04 01:53:43 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/06/04 19:06:49 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ PARS_SRCS = ./src/parsing/get_first_command.c ./src/parsing/error.c \
 			./src/parsing/lexer.c ./src/parsing/valid_arguments.c \
 			./src/parsing/print_error.c ./src/parsing/valid_commands.c \
 			./src/exec/exec.c ./src/exec/fixing_for_exec.c \
-			./src/builtins/ft_echo.c ./src/builtins/ft_exit.c
+			./src/parsing/read_heredoc.c \
+			./src/builtins/ft_echo.c ./src/builtins/ft_exit.c 
 
 PARS_OBJS = $(PARS_SRCS:.c=.o)
 
@@ -33,18 +34,18 @@ CC = cc
 
 RM = rm -f
 
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -I/Users/ylabrahm/Desktop/homebrew/opt/readline/include
 # -fsanitize=address
 
 all:	$(NAME)
 
 $(NAME):	$(COMM_OBJS) $(PARS_OBJS)
 	@make -C ./inc/libft/
-	$(CC) $(CFLAGS) ./inc/libft/libft.a $(COMM_OBJS) $(PARS_OBJS) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) ./inc/libft/libft.a $(COMM_OBJS) $(PARS_OBJS) -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -lreadline -o $(NAME)
 
 pars:		$(PARS_OBJS)
 	@make -C ./inc/libft/
-	$(CC) $(CFLAGS) ./inc/libft/libft.a $(PARS_OBJS) -lreadline -o $(PARS_NAME)
+	$(CC) $(CFLAGS) ./inc/libft/libft.a $(PARS_OBJS) -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -lreadline -o $(PARS_NAME)
 
 clean:
 	@make clean -C ./inc/libft/
