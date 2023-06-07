@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 01:03:21 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/07 18:25:42 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:46:13 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,5 @@ t_env	*ft_set_env(char **env)
 		add_env_list(&env_head, env[i]);
 		i++;
 	}
-	add_env_list(&env_head, "var=hello        world");
 	return (env_head);
 }
