@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/07 14:44:12 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:30:45 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ int main(int argc, char const *argv[], char **env)
 		head_command = get_first_command(data.user_input, env_head);
 		if(head_command)
 		{
-			// conver_l_args_to_p(head_command);
-			// set_path(head_command, env);
-			// all_cmd = convert_linked_list_to_tr_p(head_command);
-			// is_built = check_if_buil(head_command->cmd, head_command);
-			// if(head_command && (is_built == 0 || is_built == 11 || is_built == 12 || is_built == 13 || is_built == 14 || is_built == 15 || is_built == 16 || is_built == 17))
-			// 	exec(all_cmd, head_command, export_head, env_head);
-			// else
-			// 	exec_built(check_if_buil(head_command->cmd, head_command), head_command, env_head, export_head);
-			printf_commands(head_command);
+			conver_l_args_to_p(head_command);
+			set_path(head_command, env);
+			all_cmd = convert_linked_list_to_tr_p(head_command);
+			is_built = check_if_buil(head_command->cmd, head_command);
+			if(head_command && (is_built == 0 || is_built == 11 || is_built == 12 || is_built == 13 || is_built == 14 || is_built == 15 || is_built == 16 || is_built == 17))
+				exec(all_cmd, head_command, export_head, env_head);
+			else
+				exec_built(check_if_buil(head_command->cmd, head_command), head_command, env_head, export_head);
+			// printf_commands(head_command);
 			free_commands(&head_command);
 		}
 		free(data.user_input);

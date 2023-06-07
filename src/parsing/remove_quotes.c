@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/07 14:43:03 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:29:47 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,9 +222,13 @@ char    *remove_quote(t_pre_tokens *node)
     return (copy);
 }
 
-void ft_remove_quotes(t_pre_tokens **head, t_env *head_env)
+t_pre_tokens	*ft_remove_quotes(t_pre_tokens **head, t_env *head_env)
 {
-    t_pre_tokens *node;
+    t_pre_tokens	*node;
+    t_pre_tokens	*new_node;
+    t_pre_tokens	*new_head;
+    t_pre_tokens	**new_head_ix;
+    char			*all_data;
 
     node = *head;
     while (node)
@@ -235,7 +239,33 @@ void ft_remove_quotes(t_pre_tokens **head, t_env *head_env)
             node->content = expand_variable(node->content, head_env);
         else if (!(node->prev->type == TYPE_RED_HER))
             node->content = expand_variable(node->content, head_env);
-        node->content = remove_quote(node);
+        // node->content = remove_quote(node);
         node = node->next;
     }
+	all_data = malloc(sizeof(char));
+	all_data[0] = '\0';
+	node = *head;
+	while (node)
+	{
+		all_data = ft_strjoin(all_data, node->content);
+		all_data = ft_strjoin(all_data, " ");
+		node = node->next;
+	}
+	new_head = ft_tokenizer(all_data);
+	new_head_ix = &new_head;
+	new_node = *new_head_ix;
+	while (new_node)
+    {
+        set_node_type(&new_node, contains_quotes(new_node->content));
+        new_node->contain_quotes = contains_quotes(new_node->content);
+		if (!(new_node->prev))
+            new_node->content = expand_variable(new_node->content, head_env);
+        else if (!(new_node->prev->type == TYPE_RED_HER))
+            new_node->content = expand_variable(new_node->content, head_env);
+        new_node->content = remove_quote(new_node);
+        new_node = new_node->next;
+    }
+	return (*new_head_ix);
+	// printf_linked(*new_head_ix);exit(0);
+	// head = new_head_ix;
 }
