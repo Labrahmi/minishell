@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
+#    By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/06/04 19:06:49 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/06/05 12:08:09 by bel-kdio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,9 @@ PARS_SRCS = ./src/parsing/get_first_command.c ./src/parsing/error.c \
 			./src/parsing/pre_t.c ./src/parsing/remove_quotes.c \
 			./src/parsing/set_env.c ./src/parsing/fill_commands.c \
 			./src/parsing/lexer.c ./src/parsing/valid_arguments.c \
-			./src/parsing/print_error.c ./src/parsing/valid_commands.c \
-			./src/exec/exec.c ./src/exec/fixing_for_exec.c \
-			./src/parsing/read_heredoc.c \
-			./src/builtins/ft_echo.c ./src/builtins/ft_exit.c 
+			./src/parsing/print_error.c ./src/parsing/valid_commands.c\
+			./src/exec/exec.c ./src/common/fixing_for_exec.c ./src/builtin/check_if_buil.c\
+			./src/parsing/read_heredoc.c
 
 PARS_OBJS = $(PARS_SRCS:.c=.o)
 
@@ -34,18 +33,18 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -I/Users/ylabrahm/Desktop/homebrew/opt/readline/include
+# CFLAGS = -Wall -Wextra -Werror
 # -fsanitize=address
 
 all:	$(NAME)
 
 $(NAME):	$(COMM_OBJS) $(PARS_OBJS)
 	@make -C ./inc/libft/
-	$(CC) $(CFLAGS) ./inc/libft/libft.a $(COMM_OBJS) $(PARS_OBJS) -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) ./inc/libft/libft.a $(COMM_OBJS) $(PARS_OBJS) -lreadline -o $(NAME)
 
 pars:		$(PARS_OBJS)
 	@make -C ./inc/libft/
-	$(CC) $(CFLAGS) ./inc/libft/libft.a $(PARS_OBJS) -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -lreadline -o $(PARS_NAME)
+	$(CC) $(CFLAGS) ./inc/libft/libft.a $(PARS_OBJS) -lreadline -o $(PARS_NAME)
 
 clean:
 	@make clean -C ./inc/libft/

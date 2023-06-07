@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:21:18 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/01 14:33:25 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:41:46 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char **get_path(char **envp)
+char	**get_path(char **envp)
 {
-	int i;
-	char **path;
-	char *trimmed;
-	int check;
+	int		i;
+	char	**path;
+	char	*trimmed;
+	int		check;
 
 	i = 0;
 	check = 0;
@@ -26,7 +26,7 @@ char **get_path(char **envp)
 		if (ft_strncmp("PATH", envp[i], 4) == 0)
 		{
 			check = 1;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -37,46 +37,49 @@ char **get_path(char **envp)
 
 void set_path(t_command *head_command, char **env)
 {
-	t_command *tmp1;
+	t_command* tmp1;
 	char **path;
 	int i;
-
+	
 	tmp1 = head_command;
-	while (tmp1)
+	while(tmp1)
 	{
-		path = get_path(env);
-		i = 0;
-		while (path[i])
+		if(check_if_buil(tmp1->cmd, tmp1) == 0)
 		{
-			path[i] = ft_strjoin(path[i], "/");
-			path[i] = ft_strjoin(path[i], tmp1->cmd);
-			if (access(path[i], F_OK | X_OK) != -1)
+			path = get_path(env);
+			i = 0;
+			while (path[i])
 			{
-				tmp1->path = path[i];
-				break;
+				path[i] = ft_strjoin(path[i], "/");
+				path[i] = ft_strjoin(path[i], tmp1->cmd);
+				if (access(path[i], F_OK | X_OK) != -1)
+				{
+					tmp1->path = path[i];
+					break;
+				}
+				else
+					tmp1->path = NULL;
+				i++;
 			}
-			else
-				tmp1->path = NULL;
-			i++;
 		}
 		tmp1 = tmp1->next;
 	}
-	// if (path != NULL)
+	// if (path != NULL) 
 	// {
-	// 	char **current_arg = path;
-	// 	while (*current_arg != NULL)
+   	// 	char **current_arg = path;
+    // 	while (*current_arg != NULL)
 	// 	{
-	// 		free(*current_arg);
-	// 		current_arg++;
-	// 	}
-	// 	free(path);
-	// 	path = NULL;
+    //     	free(*current_arg);
+    //    		current_arg++;
+    // 	}
+    // free(path);
+    // path = NULL;
 	// }
 }
 
-int calculate_num_of_cmd(t_command *all_cmd)
+int	calculate_num_of_cmd(t_command *all_cmd)
 {
-	int num_of_cmd;
+	int	num_of_cmd;
 
 	num_of_cmd = 0;
 	while (all_cmd)
@@ -87,11 +90,11 @@ int calculate_num_of_cmd(t_command *all_cmd)
 	return (num_of_cmd);
 }
 
-int calculate_number_of_args_in_node(t_command *all_cmd)
+int	calculate_number_of_args_in_node(t_command *all_cmd)
 {
-	int i;
-	int j;
-	char **args;
+	int		i;
+	int		j;
+	char	**args;
 
 	i = 1;
 	j = 0;
@@ -103,11 +106,11 @@ int calculate_number_of_args_in_node(t_command *all_cmd)
 	return (j + i);
 }
 
-int calculate_len_of_w(t_command *all_cmd, int i)
+int	calculate_len_of_w(t_command *all_cmd, int i)
 {
-	char *cmd;
-	char **args;
-	int len;
+	char	*cmd;
+	char	**args;
+	int		len;
 
 	len = 0;
 	args = all_cmd->db_args;
@@ -118,7 +121,7 @@ int calculate_len_of_w(t_command *all_cmd, int i)
 		{
 			len++;
 		}
-	}
+	}	
 	else if (i > 0)
 	{
 		while (args[i - 1][len])
@@ -129,11 +132,11 @@ int calculate_len_of_w(t_command *all_cmd, int i)
 	return (len);
 }
 
-void fill(t_command *all_cmd, int i, char *ev_word)
+void	fill(t_command *all_cmd, int i, char *ev_word)
 {
-	char *cmd;
-	char **args;
-	int j;
+	char	*cmd;
+	char	**args;
+	int		j;
 
 	j = 0;
 	args = all_cmd->db_args;
@@ -157,11 +160,11 @@ void fill(t_command *all_cmd, int i, char *ev_word)
 	}
 }
 
-void fill_it(char **arr_of_ev_cmd, t_command *all_cmd)
+void	fill_it(char **arr_of_ev_cmd, t_command *all_cmd)
 {
-	int i;
-	int num_args_in_n;
-	int len_of_word;
+	int	i;
+	int	num_args_in_n;
+	int	len_of_word;
 
 	i = 0;
 	num_args_in_n = calculate_number_of_args_in_node(all_cmd);
@@ -175,12 +178,12 @@ void fill_it(char **arr_of_ev_cmd, t_command *all_cmd)
 	}
 }
 
-void fill_arr_of_all(char ***arr_of_all_cmd, t_command *all_cmd)
+void	fill_arr_of_all(char ***arr_of_all_cmd, t_command *all_cmd)
 {
-	int i;
-	int num_of_cmd;
-	int num_args_in_n;
-	t_command *tmp;
+	int			i;
+	int			num_of_cmd;
+	int			num_args_in_n;
+	t_command	*tmp;
 
 	i = 0;
 	tmp = all_cmd;
@@ -196,15 +199,15 @@ void fill_arr_of_all(char ***arr_of_all_cmd, t_command *all_cmd)
 	}
 }
 
-char ***convert_linked_list_to_tr_p(t_command *head_command)
+char	***convert_linked_list_to_tr_p(t_command *head_command)
 {
-	char ***arr_of_all;
-	int num_of_cmd;
+	char	***arr_of_all;
+	int		num_of_cmd;
 	t_command *all_cmd;
-
+	
 	all_cmd = head_command;
 	num_of_cmd = calculate_num_of_cmd(all_cmd);
-	arr_of_all = malloc(sizeof(char **) * (num_of_cmd + 1));
+	arr_of_all = malloc(sizeof(char **) * (num_of_cmd +1));
 	if (!arr_of_all)
 		return (0);
 	arr_of_all[num_of_cmd] = NULL;
@@ -212,48 +215,92 @@ char ***convert_linked_list_to_tr_p(t_command *head_command)
 	return (arr_of_all);
 }
 
-// execution
 
-void exec(char ***all_cmd, t_command *head, char **envp)
+
+
+
+char 	**convert_link_to_2p(t_env *env)
+{
+	t_env *tmp;
+	int size;
+	char **arr;
+	
+	tmp = env;
+	size = 0;
+	while (tmp)
+	{
+		size++;
+		tmp = tmp->next;
+	}
+	tmp = env;
+	arr = malloc(sizeof(char *) * (size +1));
+	arr[size] = NULL;
+	size = 0;
+	while (tmp)
+	{
+		arr[size] = ft_strjoin(tmp->index,"=");
+		arr[size] = ft_strjoin(arr[size],tmp->value);
+		size++;
+		tmp = tmp->next;
+	}
+	return (arr);
+}
+
+//execution
+
+void	exec(char ***all_cmd, t_command *head, t_env *exp, t_env *env)
 {
 	int i;
 	int *all_pid;
-	// int pid;
 	int status;
 	int pipefd_next[2];
+	int is_built;
 	int prev_pipe;
+	t_command *head_command;
 
-	all_pid = malloc(sizeof(int) * (calculate_num_of_cmd(head) + 1));
+	head_command = head;
+	globals.exit_status = 0;
+	all_pid=malloc(sizeof(int) * (calculate_num_of_cmd(head) + 1));
 	all_pid[calculate_num_of_cmd(head)] = 0;
 	i = 0;
-	while (all_cmd[i] != NULL)
-	{
+	while(all_cmd[i] != NULL)
+	{	
 		if (all_cmd[i + 1] != NULL)
 			pipe(pipefd_next);
 		all_pid[i] = fork();
 		if (all_pid[i] == -1)
-			return;
+			return ;
 		else if (all_pid[i] == 0)
 		{
 			if (i == 0)
 			{
-				dup2(pipefd_next[1], 1);
-				close(pipefd_next[0]);
+				dup2(pipefd_next[1],1);
+				close(pipefd_next[0]);	
 			}
 			if (i != 0 && all_cmd[i + 1] != NULL)
 			{
 				dup2(prev_pipe, 0);
-				dup2(pipefd_next[1], 1);
+				dup2(pipefd_next[1],1);
 				close(pipefd_next[0]);
 			}
 			if (all_cmd[i + 1] == NULL)
 			{
 				dup2(prev_pipe, 0);
 			}
-			// printf("[%s]\n", head->path);
-			execve(head->path, all_cmd[i], envp);
-			perror(0);
-			exit(0);
+			
+			is_built = check_if_buil(head->cmd, head_command);
+			if(is_built == 11 || is_built == 12 || is_built == 13 || is_built == 14 || is_built == 15 || is_built == 16 || is_built == 17)
+			{
+				exec_built(is_built, head, env, exp);
+				exit(globals.exit_status);
+			}
+			else
+			{
+				execve(head->path, all_cmd[i],convert_link_to_2p(env));
+			}
+			printf("minishell: command not found\n");
+			globals.exit_status = 127;			
+			exit(globals.exit_status);
 		}
 		else
 		{
@@ -267,10 +314,11 @@ void exec(char ***all_cmd, t_command *head, char **envp)
 		i++;
 	}
 	i = 0;
-	while (all_pid[i])
+	while(all_pid[i])
 	{
 		waitpid(all_pid[i], &status, 0);
 		i++;
 	}
+	globals.exit_status = status >> 8;
 	// exit(status);
 }

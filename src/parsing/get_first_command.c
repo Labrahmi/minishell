@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/05 11:34:59 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:41:27 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,6 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 			return (NULL);
 		}
 		ft_lexer(&head_command);
-		// ft_read_heredoc(&head_command);
 	}
 	return (head_command);
 }
