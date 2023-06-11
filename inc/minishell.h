@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/07 18:43:56 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/11 16:24:05 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ struct GlobalVariables globals;
 
 enum token_type
 {
-	TYPE_ARG,
-	TYPE_RED_IN,
-	TYPE_RED_OUT,
-	TYPE_RED_APP,
-	TYPE_RED_HER,
-	TYPE_RED_PIP,
+	TYPE_ARG = 1,
+	TYPE_RED_IN = 2,
+	TYPE_RED_OUT = 3,
+	TYPE_RED_APP = 4,
+	TYPE_RED_HER = 5,
+	TYPE_RED_PIP = 6,
 };
 
 typedef struct s_env
@@ -54,11 +54,19 @@ typedef struct s_check_arg
 	char	*content;
 }	t_check_arg;
 
+typedef struct s_sub
+{
+	char				**sub;
+	enum token_type		type;
+}	t_sub;
+
+
 typedef struct s_pre_tokens
 {
 	char				*content;
 	enum token_type		type;
 	int					contain_quotes;
+	t_sub				sub;
 	struct s_pre_tokens	*next;
 	struct s_pre_tokens	*prev;
 }	t_pre_tokens;
@@ -106,14 +114,14 @@ typedef struct s_command
 		int					has_error;
 }	t_command;
 
-// ls -la arg1 arg2 > out > in > here g > hey > heeey
+// ls -la arg1 arg2 >> he > out > in > h >> here g > hey > heeey
 
 void			ft_error(char *message);
 void			free_double(char **array);
 char			*ft_colorize(char *message, char *color);
 int				add_pre_t(t_pre_tokens **head, char *content, int state);
 void			free_linked(t_pre_tokens **head);
-t_pre_tokens	*ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
+void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
 t_env			*ft_set_env(char **env);
 t_command		*ft_fill_commands(t_pre_tokens **head);
 void			printf_linked(t_pre_tokens *head);
@@ -134,14 +142,15 @@ t_command		*get_first_command(char *user_input, t_env *env_head);
 int				valid_arguments(t_pre_tokens **head_args);
 int				valid_commands(t_command **head_commands);
 void			print_error(char *error_msg);
-void    conver_l_args_to_p(t_command *head_command);
-char    ***convert_linked_list_to_tr_p(t_command *all_cmd);
-void	exec(char ***all_cmd, t_command *head, t_env *exp, t_env *env);
-void 	set_path(t_command *head_command, t_env *env_head);
-int    check_if_buil(char *s, t_command *cmds);
-int    exec_built(int n, t_command *cmds, t_env *env, t_env *export_head);
+void			conver_l_args_to_p(t_command *head_command);
+char			***convert_linked_list_to_tr_p(t_command *all_cmd);
+void			exec(char ***all_cmd, t_command *head, t_env *exp, t_env *env);
+void			set_path(t_command *head_command, t_env *env_head);
+int				check_if_buil(char *s, t_command *cmds);
+int				exec_built(int n, t_command *cmds, t_env *env, t_env *export_head);
+char			*remove_quote(char *content);
 ///
-int				add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node);
+int				add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node, enum token_type type);
 int				calculate_num_of_cmd(t_command *all_cmd);
 int				calculate_number_of_args_in_node(t_command *all_cmd);
 int				calculate_len_of_w(t_command *all_cmd, int i);

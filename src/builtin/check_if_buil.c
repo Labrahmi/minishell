@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_buil.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:59:29 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/06 13:16:40 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:03:43 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void search_in_env_and_replace(t_env *env, char *index, char *str)
         if (ft_strncmp(index, tmp->index, ft_strlen(index)) == 0)
         {
             newValue = ft_strdup(str);
-            free(tmp->value);
+            // free(tmp->value);
             tmp->value = newValue;
             return;
         }

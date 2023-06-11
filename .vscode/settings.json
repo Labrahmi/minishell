@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "libft.h": "c",
+        "string.h": "c",
+        "minishell.h": "c"
+    }
+}

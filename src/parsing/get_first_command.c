@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/07 18:28:59 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/11 22:50:27 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char *ft_read_input()
 	char *user_input;
 	char *trimed_value;
 
-	prompt = ft_colorize(ft_strdup("monoshell-1.0> "), "green");
+	prompt = ft_colorize(ft_strdup("minishell-1.0> "), "green");
 	user_input = readline(prompt);
 	free(prompt);
 	if (!(user_input))
@@ -86,7 +86,7 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf("[%s]", node->content);
+		printf(" [%s]", node->content);
 		node = node->next;
 	}
 	printf("\n");
@@ -101,7 +101,7 @@ void	printf_commands(t_command *head)
 	while (temp_comm)
 	{
 		printf("command : [%s]\n", temp_comm->cmd);
-		printf("Args : ");
+		printf("Args :");
 		printf_linked(temp_comm->args);
 		printf("Out-Files : ");
 		printf_linked(temp_comm->output_files);
@@ -274,6 +274,27 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	return (tok.head);
 }
 
+t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
+{
+	t_pre_tokens	*node;
+	t_pre_tokens	*returned;
+	int 			i;
+
+	returned = NULL;
+	node = *args;
+	while (node)
+	{
+		i = 0;
+		while ((node->sub.sub)[i])
+		{
+			add_pre_t_2(&returned, (node->sub.sub)[i], 0, node->sub.type);
+			i++;
+		}
+		node = node->next;
+	}
+	return (returned);
+}
+
 t_command	*get_first_command(char *user_input, t_env *env_head)
 {
 	t_pre_tokens	*head_args;
@@ -281,7 +302,8 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 	char			*error;
 
 	head_args = ft_tokenizer(user_input);
-	head_args = ft_remove_quotes(&head_args, env_head);
+	ft_remove_quotes(&head_args, env_head);
+	head_args = ft_set_subs(&head_args);
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);
 	head_command = ft_fill_commands(&head_args);

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:01:42 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/02 15:56:19 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/11 16:25:04 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int add_pre_t(t_pre_tokens **head, char *content, int state)
 	return (0);
 }
 
-int add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node)
+int add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node, enum token_type type)
 {
 	t_pre_tokens *created_node;
 
@@ -126,6 +126,8 @@ int add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node)
 		created_node->content = ft_strdup(content);
 	created_node->next = NULL;
 	created_node->prev = NULL;
+	if (type)
+		created_node->type = type;
 	add_to_last(head, created_node);
 	return (0);
 }
