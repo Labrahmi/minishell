@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   exec_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/01 16:01:47 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/08 20:11:12 by bel-kdio         ###   ########.fr       */
+/*   Created: 2023/06/08 22:28:13 by bel-kdio          #+#    #+#             */
+/*   Updated: 2023/06/09 16:12:13 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	exec_pwd(t_env *env)
 {
-	size_t			i;
-	unsigned char	*uc1;
-	unsigned char	*uc2;
-
-	if (!s1 || !s2)
-		return (1);
-	uc1 = (unsigned char *) s1;
-	uc2 = (unsigned char *) s2;
-	i = 0;
-	while (i < n && (uc1[i] || uc2[i]))
-	{
-		if (uc1[i] != uc2[i])
-			return (uc1[i] - uc2[i]);
-		i++;
-	}
-	return (0);
+	printf("%s\n", search_in_env(env, "PWD"));
+	glob.exit_status = 0;
+	return (3);
 }

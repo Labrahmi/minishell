@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/01 16:01:47 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/08 20:11:12 by bel-kdio         ###   ########.fr       */
+/*   Created: 2023/06/09 13:15:58 by bel-kdio          #+#    #+#             */
+/*   Updated: 2023/06/09 13:23:45 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	calculate_num_of_cmd(t_command *all_cmd)
 {
-	size_t			i;
-	unsigned char	*uc1;
-	unsigned char	*uc2;
+	int	num_of_cmd;
 
-	if (!s1 || !s2)
-		return (1);
-	uc1 = (unsigned char *) s1;
-	uc2 = (unsigned char *) s2;
-	i = 0;
-	while (i < n && (uc1[i] || uc2[i]))
+	num_of_cmd = 0;
+	while (all_cmd)
 	{
-		if (uc1[i] != uc2[i])
-			return (uc1[i] - uc2[i]);
-		i++;
+		num_of_cmd++;
+		all_cmd = all_cmd->next;
 	}
-	return (0);
+	return (num_of_cmd);
 }

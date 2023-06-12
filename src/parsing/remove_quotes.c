@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/12 15:40:59 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:22:39 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char *get_new_token(char **token, char *new, t_env *head_env, int i)
 
 	env_index = get_index(&(*token)[i + 1]);
 	if (env_index[0] == '?')
-		env_value = ft_itoa(globals.exit_status);
+		env_value = ft_itoa(glob.exit_status);
 	else
 		env_value = get_value(env_index, &head_env);
 	new = ft_substr((*token), 0, i);
