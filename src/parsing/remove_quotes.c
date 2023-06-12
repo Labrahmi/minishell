@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/12 00:21:45 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:40:59 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,12 +291,12 @@ t_sub expand_variable_2(t_pre_tokens **node_ix, t_env *head_env)
 	}
 	if (token != NULL)
 		add_token(&token_list, token);
-	i = 0;
-	while (i < token_list.count)
-	{
-		printf("%s\n", token_list.tokens[i]);
-		i++;
-	}
+	// i = 0;
+	// while (i < token_list.count)
+	// {
+	// 	printf("%s\n", token_list.tokens[i]);
+	// 	i++;
+	// }
 	// ***********************************************************************************
 	i = 0;
 	while (i < token_list.count)
@@ -464,5 +464,4 @@ void ft_remove_quotes(t_pre_tokens **head, t_env *head_env)
 			node->sub = get_sub_from_node(&node);
 		node = node->next;
 	}
-	exit(0);
 }

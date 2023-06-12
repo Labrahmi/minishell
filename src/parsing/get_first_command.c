@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/11 22:50:27 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:57:15 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*say_type(enum token_type type)
 			return ("________Pip_______");
 		break;
 	}
+	return ("_____Argument_____");
 }
 
 void printf_linked(t_pre_tokens *head)
@@ -86,7 +87,7 @@ void printf_linked(t_pre_tokens *head)
 	i = 0;
 	while (node)
 	{
-		printf(" [%s]", node->content);
+		printf("[[%s]:(%s)]\n", node->content, say_type(node->type));
 		node = node->next;
 	}
 	printf("\n");
@@ -101,9 +102,9 @@ void	printf_commands(t_command *head)
 	while (temp_comm)
 	{
 		printf("command : [%s]\n", temp_comm->cmd);
-		printf("Args :");
+		printf("Args :\n");
 		printf_linked(temp_comm->args);
-		printf("Out-Files : ");
+		printf("Out-Files : \n");
 		printf_linked(temp_comm->output_files);
 		printf("In-Files : ");
 		printf_linked(temp_comm->input_files);
@@ -287,7 +288,7 @@ t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 		i = 0;
 		while ((node->sub.sub)[i])
 		{
-			add_pre_t_2(&returned, (node->sub.sub)[i], 0, node->sub.type);
+			add_pre_t_2(&returned, remove_quote((node->sub.sub)[i]), 0, node->sub.type);
 			i++;
 		}
 		node = node->next;
