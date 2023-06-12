@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/12 15:54:23 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:59:27 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int valid_commands(t_command **head_commands)
         command = command->next;
     }
     if (ret != 0)
-        print_error("parsing error\n");
+        print_error("syntax error\n");
     command = *head_commands;
     while (command)
     {

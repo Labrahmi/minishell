@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/11 14:20:42 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:08:55 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char const *argv[], char **env)
 				close(fdout);
 			}
 			// printf_commands(head_command);
-			 free_commands(&head_command);
+			free_commands(&head_command);
 		}
 		free(data.user_input);
 		// usleep(50000);print_leaks();

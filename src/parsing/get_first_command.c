@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/12 15:57:15 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:12:01 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,8 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	if (ft_tokenizer_loop(&tok) != 0)
 	{
 		free_linked(&(tok.head));
-		print_error("parsing error\n");
+		print_error("unexpected EOF while looking for matching\n");
+		// print_error("syntax error\n");
 		free(tok.user_input);
 		return (0);
 	}
