@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/12 16:23:41 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:50:05 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ extern t_globals	glob;
 
 enum token_type
 {
-	TYPE_ARG,
-	TYPE_RED_IN,
-	TYPE_RED_OUT,
-	TYPE_RED_APP,
-	TYPE_RED_HER,
-	TYPE_RED_PIP,
+	TYPE_ARG = 1,
+	TYPE_RED_IN = 2,
+	TYPE_RED_OUT = 3,
+	TYPE_RED_APP = 4,
+	TYPE_RED_HER = 5,
+	TYPE_RED_PIP = 6,
 };
 
 typedef struct s_env
