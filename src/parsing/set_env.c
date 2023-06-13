@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 01:03:21 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/11 16:56:00 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/13 22:42:57 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_env	*ft_set_env(char **env)
 		add_env_list(&env_head, env[i]);
 		i++;
 	}
-	// add_env_list(&env_head, "var_1=     hello");
+	add_env_list(&env_head, "var=     hello");
 	// add_env_list(&env_head, "var_2=world     ");
 	// add_env_list(&env_head, "var=>");
 	return (env_head);
