@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/12 16:50:05 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:02:53 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int				valid_commands(t_command **head_commands);
 void			print_error(char *error_msg);
 int				add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node, enum token_type type);
 void			ft_read_heredoc(t_command **command_ix);
+int				contains_quotes(char *content);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/12 16:22:39 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:30:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,9 +432,9 @@ t_sub get_sub_from_node(t_pre_tokens **node_ix)
 
 void ft_remove_quotes(t_pre_tokens **head, t_env *head_env)
 {
-	t_pre_tokens *node;
-	char **splited;
-	int i;
+	t_pre_tokens	*node;
+	char			**splited;
+	int 			i;
 
 	node = *head;
 	while (node)
@@ -445,7 +445,6 @@ void ft_remove_quotes(t_pre_tokens **head, t_env *head_env)
 			node->content = expand_variable(node->content, head_env, 1);
 		else if (node->prev->type == TYPE_ARG)
 			node->content = expand_variable(node->content, head_env, 1);
-		// node->content = remove_quote(node);
 		node = node->next;
 	}
 	// --------------------------------------------------------

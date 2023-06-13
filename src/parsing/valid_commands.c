@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/12 19:59:27 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:09:57 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int    check_redirections(t_command **command_ix)
 {
     t_pre_tokens    *args;
     char            *returned;
-    int                ret_type;
+    int             ret_type;
 
     args = (*command_ix)->args;
     while (args)
@@ -94,10 +94,10 @@ t_pre_tokens	*ft_set_files(t_command **commands_ix)
 
 int valid_commands(t_command **head_commands)
 {
-    int                ret;
-    t_command        *command;
+    int             ret;
+    t_command       *command;
     t_pre_tokens    *temp;
-    int                stpo = 0;
+    int             stpo = 0;
 
     ret = 0;
     command = *head_commands;

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/12 20:12:01 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:10:03 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,6 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	{
 		free_linked(&(tok.head));
 		print_error("unexpected EOF while looking for matching\n");
-		// print_error("syntax error\n");
 		free(tok.user_input);
 		return (0);
 	}
@@ -289,12 +288,24 @@ t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 		i = 0;
 		while ((node->sub.sub)[i])
 		{
-			add_pre_t_2(&returned, remove_quote((node->sub.sub)[i]), 0, node->sub.type);
+			add_pre_t_2(&returned, (node->sub.sub)[i], 0, node->sub.type);
 			i++;
 		}
 		node = node->next;
 	}
 	return (returned);
+}
+
+void	ft_set_containq(t_pre_tokens **args)
+{
+	t_pre_tokens	*node;
+	node = *args;
+	while (node)
+	{
+		node->contain_quotes = contains_quotes(node->content);
+		node->content = remove_quote(node->content);
+		node = node->next;
+	}
 }
 
 t_command	*get_first_command(char *user_input, t_env *env_head)
@@ -306,6 +317,7 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 	head_args = ft_tokenizer(user_input);
 	ft_remove_quotes(&head_args, env_head);
 	head_args = ft_set_subs(&head_args);
+	ft_set_containq(&head_args);
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);
 	head_command = ft_fill_commands(&head_args);
