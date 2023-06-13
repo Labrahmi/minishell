@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:21:18 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/12 20:10:34 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:00:03 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	check_paths(char *path, char *cmd)
 {
 	if ((path) && (ft_strncmp(path, "cmdnull", 8) == 0))
 	{
-		glob.exit_status = 0;
+		glob.exit_status = pr_err("minishell: ", cmd,
+				": command not found\n", 127);
 		exit(glob.exit_status);
 	}
 	if ((path) && (ft_strncmp(path, "not", 4) == 0))
