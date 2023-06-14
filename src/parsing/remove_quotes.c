@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/13 20:09:01 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:46:00 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,26 +230,10 @@ t_sub expand_variable_2(t_pre_tokens **node_ix, t_env *head_env)
 			i++;
 			continue;
 		}
-		if (str[i] == '\'' && !singleq)
+		if (str[i] == '\'' && !doubleq)
 			singleq = !singleq;
-
-		if (str[i] == '\"' && !doubleq)
+		if (str[i] == '\"' && !singleq)
 			doubleq = !doubleq;
-		/*
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			if (inQuotes && str[i] == inQuotes)
-			{
-				inQuotes = 0;
-			}
-			else if (!inQuotes)
-			{
-				inQuotes = str[i];
-			}
-			i++;
-			continue;
-		}
-		*/
 		if (str[i] == '$' && !singleq)
 		{
 			if (token != NULL)

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/13 23:51:18 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:46:34 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,15 +308,33 @@ int		num_of_strs(char **strings)
 	return (i);
 }
 
-char	*expand_red(t_pre_tokens *node, int *ambiguous, t_env *env_head)
+char	*expand_red(t_pre_tokens *node, int *ambiguous, int *error, t_env *env_head)
 {
 	t_sub	strings;
 	int		total;
+	int		i;
 
 	strings = expand_variable_2(&node, env_head);
 	total = num_of_strs(strings.sub);
 	if (total > 1)
-		*ambiguous = 1;
+	{
+		i = 1;
+		while (i < total)
+		{
+			if (ft_strlen(remove_quote(ft_strdup(strings.sub[i]))) != 0)
+				(*ambiguous) = 1;
+			i++;
+		}
+	}
+	else if (total == 0)
+	{
+		*error = 1;
+		return (NULL);
+	}
+	// 
+	else if (ft_strlen(remove_quote(ft_strdup(strings.sub[0]))) == 0)
+		(*ambiguous) = 1;
+	// 
 	return (strings.sub[0]);
 }
 
@@ -324,6 +342,7 @@ int	ft_set_containq(t_pre_tokens **args, t_env *env_head)
 {
 	t_pre_tokens	*node;
 	int				ambiguous;
+	int				error;
 
 	node = *args;
 	ambiguous = 0;
@@ -334,8 +353,8 @@ int	ft_set_containq(t_pre_tokens **args, t_env *env_head)
 		if (node->prev)
 		{
 			if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
-				node->content = expand_red(node, &ambiguous, env_head);
-			if (ambiguous == 1)
+				node->content = expand_red(node, &ambiguous, &error, env_head);
+			if (ambiguous == 1 || error == 1)
 				return (1);
 		}
 		/**/
