@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/14 19:46:34 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:08:06 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ void printf_linked(t_pre_tokens *head)
 	t_pre_tokens	*node;
 	int				i;
 
-	node = head;
 	i = 0;
+	node = head;
 	while (node)
 	{
-		printf("[[%s]:(%s)]\n", node->content, say_type(node->type));
+		printf("[%s]", node->content);
 		node = node->next;
 	}
 	printf("\n");
@@ -102,9 +102,9 @@ void	printf_commands(t_command *head)
 	while (temp_comm)
 	{
 		printf("command : [%s]\n", temp_comm->cmd);
-		printf("Args :\n");
+		printf("Args :");
 		printf_linked(temp_comm->args);
-		printf("Out-Files : \n");
+		printf("Out-Files : ");
 		printf_linked(temp_comm->output_files);
 		printf("In-Files : ");
 		printf_linked(temp_comm->input_files);
@@ -113,11 +113,11 @@ void	printf_commands(t_command *head)
 		printf("Herdoc-Files : ");
 		printf_linked(temp_comm->herdoc_files);
 		printf("--------------------------\n");
-		printf("here_data :\n%s", temp_comm->here_doc_data);
+		// printf("here_data :\n%s", temp_comm->here_doc_data);
+		// printf("--------------------------");
+		// printf("out_type : %d\n", temp_comm->out_type);
 		printf("--------------------------\n");
-		printf("out_type : %d\n", temp_comm->out_type);
-		printf("--------------------------\n");
-		printf("in_type : %d\n", temp_comm->in_type);
+		printf("in_error : %d\n", temp_comm->in_error);
 		printf("--------------------------\n");
 		temp_comm = temp_comm->next;
 	}
@@ -267,7 +267,7 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	if (ft_tokenizer_loop(&tok) != 0)
 	{
 		free_linked(&(tok.head));
-		print_error("unexpected EOF while looking for matching\n");
+		print_error("unexpected EOF while looking for matching\n", 258);
 		free(tok.user_input);
 		return (0);
 	}
@@ -296,73 +296,32 @@ t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 	return (returned);
 }
 
-int		num_of_strs(char **strings)
-{
-	int	i;
 
-	i = 0;
-	if (!strings)
-		return (0);
-	while (strings[i])
-		i++;
-	return (i);
-}
+// int	ft_set_containq(t_pre_tokens **args, t_env *env_head)
+// {
+// 	t_pre_tokens	*node;
+// 	int				ambiguous;
+// 	int				error;
 
-char	*expand_red(t_pre_tokens *node, int *ambiguous, int *error, t_env *env_head)
-{
-	t_sub	strings;
-	int		total;
-	int		i;
-
-	strings = expand_variable_2(&node, env_head);
-	total = num_of_strs(strings.sub);
-	if (total > 1)
-	{
-		i = 1;
-		while (i < total)
-		{
-			if (ft_strlen(remove_quote(ft_strdup(strings.sub[i]))) != 0)
-				(*ambiguous) = 1;
-			i++;
-		}
-	}
-	else if (total == 0)
-	{
-		*error = 1;
-		return (NULL);
-	}
-	// 
-	else if (ft_strlen(remove_quote(ft_strdup(strings.sub[0]))) == 0)
-		(*ambiguous) = 1;
-	// 
-	return (strings.sub[0]);
-}
-
-int	ft_set_containq(t_pre_tokens **args, t_env *env_head)
-{
-	t_pre_tokens	*node;
-	int				ambiguous;
-	int				error;
-
-	node = *args;
-	ambiguous = 0;
-	while (node)
-	{
-		node->contain_quotes = contains_quotes(node->content);
-		/**/
-		if (node->prev)
-		{
-			if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
-				node->content = expand_red(node, &ambiguous, &error, env_head);
-			if (ambiguous == 1 || error == 1)
-				return (1);
-		}
-		/**/
-		node->content = remove_quote(node->content);
-		node = node->next;
-	}
-	return (0);
-}
+// 	node = *args;
+// 	ambiguous = 0;
+// 	while (node)
+// 	{
+// 		node->contain_quotes = contains_quotes(node->content);
+// 		/**/
+// 		if (node->prev)
+// 		{
+// 			if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
+// 				node->content = expand_red(node, &ambiguous, &error, env_head);
+// 			if (ambiguous == 1 || error == 1)
+// 				return (1);
+// 		}
+// 		/**/
+// 		node->content = remove_quote(node->content);
+// 		node = node->next;
+// 	}
+// 	return (0);
+// }
 
 t_command	*get_first_command(char *user_input, t_env *env_head)
 {
@@ -373,18 +332,12 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 	head_args = ft_tokenizer(user_input);
 	ft_remove_quotes(&head_args, env_head);
 	head_args = ft_set_subs(&head_args);
-	if (ft_set_containq(&head_args, env_head))
-	{
-		print_error("ambiguous redirect\n");
-		glob.exit_status = 1;
-		return (NULL);
-	}
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);
 	head_command = ft_fill_commands(&head_args);
 	if (head_command)
 	{
-		if (valid_commands(&head_command) == 1)
+		if (valid_commands(&head_command, env_head) == 1)
 		{
 			free_commands(&head_command);
 			return (NULL);

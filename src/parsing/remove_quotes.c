@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/14 19:46:00 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:38:41 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,16 @@ void expand_loop_1(char **token, int in_single_quote, int in_double_quote, int i
 			in_double_quote = (!in_double_quote);
 		if ((*token)[i] == '$' && (!in_single_quote))
 		{
-			if (in_double_quote || ((!in_double_quote) && (*token)[i - 1] && (*token)[i - 1] == '='))
+			if (in_double_quote)
 			{
 				if (!((*token)[i + 1]))
 					return;
 				new = get_new_token(token, new, head_env, i);
+				if ((ft_strlen(new) == 0))
+				{
+					*token = ft_strdup("");
+					return ;
+				}
 				(*token) = ft_strdup(new);
 				free(new);
 			}
@@ -126,6 +131,11 @@ void expand_loop_2(char **token, int in_single_quote, int in_double_quote, int i
 			if (!((*token)[i + 1]))
 				return;
 			new = get_new_token(token, new, head_env, i);
+			if ((ft_strlen(new) == 0))
+			{
+				*token = ft_strdup("");
+				return ;
+			}
 			(*token) = ft_strdup(new);
 			free(new);
 		}
@@ -141,6 +151,7 @@ char *expand_variable(char *token, t_env *head_env, int state)
 	i = -1;
 	in_single_quote = 0;
 	in_double_quote = 0;
+	// return (token);
 	if (state == 1)
 		expand_loop_1(&token, in_single_quote, in_double_quote, i, head_env);
 	else

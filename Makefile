@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+         #
+#    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/06/11 10:08:44 by bel-kdio         ###   ########.fr        #
+#    Updated: 2023/06/17 16:03:27 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS =  #-fsanitize=address #-Wall -Wextra -Werror
+CFLAGS = #-fsanitize=address -g #-Wall -Wextra -Werror
 
 all: $(NAME)
 

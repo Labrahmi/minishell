@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/13 22:41:00 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:55:13 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ typedef struct s_command
 	char				**db_args;
 	char				*path;
 	char				*here_doc_data;
+	int					pipe_hd;
 	struct s_command	*next;
 	int					has_error;
+	int					in_error;
 }	t_command;
 
 void			ft_error(char *message);
@@ -129,10 +131,10 @@ int				ft_cnt(char *string);
 void			print_leaks();
 t_command		*get_first_command(char *user_input, t_env *env_head);
 int				valid_arguments(t_pre_tokens **head_args);
-int				valid_commands(t_command **head_commands);
-void			print_error(char *error_msg);
+int				valid_commands(t_command **head_commands, t_env *env_head);
+void			print_error(char *error_msg, int error_num);
 int				add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node, enum token_type type);
-void			ft_read_heredoc(t_command **command_ix);
+int				ft_read_heredoc(t_command **command_ix);
 int				contains_quotes(char *content);
 char			*expand_variable(char *token, t_env *head_env, int state);
 t_sub			expand_variable_2(t_pre_tokens **node_ix, t_env *head_env);

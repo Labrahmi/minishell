@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/13 23:49:52 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:26:40 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char const *argv[], char **env)
 	t_env			*export_head;
 	int				is_built;
 
+
 	// signal(SIGINT, sigint_handler);
 	// signal(SIGQUIT, sigquit_handler);
 	(void)argc;
@@ -51,22 +52,7 @@ int	main(int argc, char const *argv[], char **env)
 		{
 			conver_l_args_to_p(head_command);
 			all_cmd = convert_linked_list_to_tr_p(head_command);
-			is_built = check_if_buil(head_command->cmd, head_command);
-			if (head_command && (is_built == 0 || (is_built >= 11 && is_built <= 17)))
-				exec(all_cmd, head_command, export_head, env_head);
-			else
-			{
-				int fdin;
-				int fdout;
-				fdin = dup(0);
-				fdout = dup(1);
-				redirection(head_command);
-				exec_built(is_built, head_command, env_head, export_head);
-				dup2(fdin, 0);
-				close(fdin);
-				dup2(fdout, 1);
-				close(fdout);
-			}
+			exec(all_cmd, head_command, export_head, env_head);
 			// printf_commands(head_command);
 			free_commands(&head_command);
 		}

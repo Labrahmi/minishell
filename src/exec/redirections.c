@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 10:07:17 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/12 19:39:43 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:28:00 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	output(t_pre_tokens *out)
 		else
 		{
 			out = out->next;
-			continue;
+			continue ;
 		}
 		if (out_file != -1)
 		{
@@ -36,9 +36,9 @@ void	output(t_pre_tokens *out)
 	}
 }
 
-void input(t_pre_tokens *in)
+void	input(t_pre_tokens *in)
 {
-	int in_file;
+	int	in_file;
 
 	while (in)
 	{
@@ -48,15 +48,27 @@ void input(t_pre_tokens *in)
 			dup2(in_file, STDIN_FILENO);
 			close(in_file);
 		}
+		else
+		{
+			glob.exit_status = pr_err("minishell: ", in->content,
+					": No such file or directory\n", 1);
+			// should not extit
+			exit(glob.exit_status);
+		}
 		in = in->next;
 	}
 }
 
-void redirection(t_command *head)
+void	redirection(t_command *head)
 {
-	t_pre_tokens *out;
-	t_pre_tokens *in;
+	t_pre_tokens	*out;
+	t_pre_tokens	*in;
 
+	if (head->herdoc_files)
+	{
+		dup2(head->pipe_hd, 0);
+		close(head->pipe_hd);
+	}
 	out = head->output_files;
 	in = head->input_files;
 	if (head->output_files)
