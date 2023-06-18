@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/17 16:26:05 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/18 22:40:41 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ void	add_returned_to_files(char *data, t_command **command_ix, int ret_type)
 int    check_redirections(t_command **command_ix)
 {
     t_pre_tokens    *args;
-    char            *returned;
-    int             ret_type;
 
     args = (*command_ix)->args;
     while (args)
     {
         if (args->type != TYPE_ARG)
         {
-            /* ERROR */
             if (!(args->next))
             {
                 (*command_ix)->has_error = 1;
@@ -54,7 +51,6 @@ int    check_redirections(t_command **command_ix)
             }
             else
             {
-                /* ERROR */
                 if (args->next->type != TYPE_ARG)
                 {
                     (*command_ix)->has_error = 1;
@@ -120,45 +116,82 @@ char	*expand_red(t_pre_tokens *node, int *ambiguous, t_env *env_head)
 	return (strings.sub[0]);
 }
 
+int	check_in_err_help(t_pre_tokens *node, int *ambiguous, t_env *env_head)
+{
+	int	in_file_fd;
+
+	if (node->prev->type == TYPE_RED_IN)
+	{
+		node->content = expand_red(node, ambiguous, env_head);
+		if (*ambiguous == 1)
+			return (1);
+		in_file_fd = open(node->content, O_RDONLY);
+		if (in_file_fd == -1)
+		{
+			close(in_file_fd);
+			return (2);
+		}
+		close(in_file_fd);
+	}
+	if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
+		node->content = expand_red(node, ambiguous, env_head);
+	if (*ambiguous == 1)
+		return (1);
+	return (0);
+}
+
 int check_in_error(t_command **commands_ix, t_env *env_head)
 {
-    t_command       *command;
+	t_command		*command;
 	t_pre_tokens	*node;
 	int				ambiguous;
-	int				in_file_fd;
+	int				ret;
 
-    command = *commands_ix;
+	command = *commands_ix;
 	node = command->args;
 	ambiguous = 0;
 	while (node)
 	{
 		node->contain_quotes = contains_quotes(node->content);
-		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 		if (node->prev)
 		{
-			if (node->prev->type == TYPE_RED_IN)
-			{
-				node->content = expand_red(node, &ambiguous, env_head);
-                if (ambiguous == 1)
-                    return (1);
-				in_file_fd = open(node->content, O_RDONLY);
-				if (in_file_fd == -1)
-				{
-					close(in_file_fd);
-                    return (2);
-				}
-				close(in_file_fd);
-			}
-			if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
-				node->content = expand_red(node, &ambiguous, env_head);
-			if (ambiguous == 1)
-				return (1);
+			ret = check_in_err_help(node, &ambiguous, env_head);
+			if (ret == 1 || ret == 2)
+				return (ret);
 		}
-		/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 		node->content = remove_quote(node->content);
 		node = node->next;
 	}
-    return (0);
+	return (0);
+}
+
+void	valid_commands_2(t_command **head_commands, int ret)
+{
+	t_command	*command;
+	int			stpo;
+
+	stpo = 0;
+    command = *head_commands;
+    while (command)
+    {
+        if (command->has_error)
+            stpo = 1;
+        if (!stpo)
+            ft_read_heredoc(&command);
+        command = command->next;
+    }
+    if (ret == 0)
+    {
+        command = *head_commands;
+        while (command)
+        {
+            if (command->in_error == 1)
+				print_error("ambiguous redirect\n", 1);
+            if (command->in_error == 2)
+                print_error("No such file or directory\n", 1);
+            command = command->next;
+        }
+    }	
 }
 
 int valid_commands(t_command **head_commands, t_env *env_head)
@@ -181,26 +214,6 @@ int valid_commands(t_command **head_commands, t_env *env_head)
     }
     if (ret != 0)
         print_error("syntax error\n", 258);
-    command = *head_commands;
-    while (command)
-    {
-        if (command->has_error)
-            stpo = 1;
-        if (!stpo)
-            ft_read_heredoc(&command);
-        command = command->next;
-    }
-    if (ret == 0)
-    {
-        command = *head_commands;
-        while (command)
-        {
-            if (command->in_error == 1)
-                print_error("ambiguous redirect\n", 1);
-            if (command->in_error == 2)
-                print_error("No such file or directory\n", 1);
-            command = command->next;
-        }
-    }
+	valid_commands_2(head_commands, ret);
     return (ret > 0);
 }

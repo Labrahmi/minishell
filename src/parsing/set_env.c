@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 01:03:21 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/15 16:40:34 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/18 22:42:41 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,5 @@ t_env	*ft_set_env(char **env)
 		add_env_list(&env_head, env[i]);
 		i++;
 	}
-	// add_env_list(&env_head, "var=Makefile");
-	// add_env_list(&env_head, "whitespace_left=     hello");
-	// add_env_list(&env_head, "whitespace_right=hello     ");
-	// add_env_list(&env_head, "whitespace=   whitespace   ");
-	// add_env_list(&env_head, "no_whitespace=no_whitespace");
-	// add_env_list(&env_head, "space=           ");
-	// export space="           "
-	// add_env_list(&env_head, "var_2=world     ");
-	// add_env_list(&env_head, "var=>");
 	return (env_head);
 }

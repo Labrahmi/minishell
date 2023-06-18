@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/17 16:08:06 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/18 22:53:30 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,6 @@ void	printf_commands(t_command *head)
 		printf_linked(temp_comm->append_files);
 		printf("Herdoc-Files : ");
 		printf_linked(temp_comm->herdoc_files);
-		printf("--------------------------\n");
-		// printf("here_data :\n%s", temp_comm->here_doc_data);
-		// printf("--------------------------");
-		// printf("out_type : %d\n", temp_comm->out_type);
 		printf("--------------------------\n");
 		printf("in_error : %d\n", temp_comm->in_error);
 		printf("--------------------------\n");
@@ -295,33 +291,6 @@ t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 	}
 	return (returned);
 }
-
-
-// int	ft_set_containq(t_pre_tokens **args, t_env *env_head)
-// {
-// 	t_pre_tokens	*node;
-// 	int				ambiguous;
-// 	int				error;
-
-// 	node = *args;
-// 	ambiguous = 0;
-// 	while (node)
-// 	{
-// 		node->contain_quotes = contains_quotes(node->content);
-// 		/**/
-// 		if (node->prev)
-// 		{
-// 			if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
-// 				node->content = expand_red(node, &ambiguous, &error, env_head);
-// 			if (ambiguous == 1 || error == 1)
-// 				return (1);
-// 		}
-// 		/**/
-// 		node->content = remove_quote(node->content);
-// 		node = node->next;
-// 	}
-// 	return (0);
-// }
 
 t_command	*get_first_command(char *user_input, t_env *env_head)
 {
