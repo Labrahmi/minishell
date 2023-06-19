@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_first_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 13:18:52 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:04:52 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	free_linked(t_pre_tokens **head)
 	while (node)
 	{
 		next = node->next;
-		free(node->content);
+		// free(node->content);
 		free(node);
 		node = next;
 	}

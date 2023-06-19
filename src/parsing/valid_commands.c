@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/19 14:43:55 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:12:08 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ char	*expand_red(t_pre_tokens *node, int *ambiguous, t_env *env_head)
 
 	strings = expand_variable_2(&node, env_head);
 	total = num_of_strs(strings.sub);
-	if ((total == 0) || (total > 1))
+	if ((total == 0 || total > 1))
 	{
 		*ambiguous = 1;
 		free(node->content);
 		return ft_strdup("");
 	}
-	free(node->content);
+	// free(node->content);
 	return (strings.sub[0]);
 }
 
@@ -157,14 +157,14 @@ int check_in_error(t_command **commands_ix, t_env *env_head)
 	ambiguous = 0;
 	while (node)
 	{
-		node->contain_quotes = contains_quotes(node->content);
-		if (node->prev)
-		{
-			ret = check_in_err_help(node, &ambiguous, env_head);
-			if (ret == 1 || ret == 2)
-				return (ret);
-		}
-		if ((!node->prev) || ((node->prev) && (node->prev->type != TYPE_RED_HER)))
+		// node->contain_quotes = contains_quotes(node->content);
+		// if (node->prev)
+		// {
+		// 	ret = check_in_err_help(node, &ambiguous, env_head);
+		// 	if (ret == 1 || ret == 2)
+		// 		return (ret);
+		// }
+		if ((!node->prev) || ((node->prev) && (node->prev->type == TYPE_ARG || node->prev->type == TYPE_RED_PIP)))
 			node->content = remove_quote(node->content);
 		node = node->next;
 	}
@@ -186,18 +186,18 @@ void	valid_commands_2(t_command **head_commands, int ret, t_env *env_head)
 			command->pipe_hd = ft_read_heredoc(&command, env_head);
         command = command->next;
     }
-    if (ret == 0)
-    {
-        command = *head_commands;
-        while (command)
-        {
-            if (command->in_error == 1)
-				print_error("ambiguous redirect\n", 1);
-            if (command->in_error == 2)
-                print_error("No such file or directory\n", 1);
-            command = command->next;
-        }
-    }	
+    // if (ret == 0)
+    // {
+    //     command = *head_commands;
+    //     while (command)
+    //     {
+    //         if (command->in_error == 1)
+	// 			print_error("ambiguous redirect\n", 1);
+    //         if (command->in_error == 2)
+    //             print_error("No such file or directory\n", 1);
+    //         command = command->next;
+    //     }
+    // }	
 }
 
 int valid_commands(t_command **head_commands, t_env *env_head)

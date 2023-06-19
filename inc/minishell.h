@@ -6,7 +6,7 @@
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 12:50:01 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:50:56 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <dirent.h>
+# include <errno.h>
+# include <string.h>
 
 typedef struct s_globals	 {
 	int	exit_status;
@@ -143,8 +145,11 @@ void			set_node_type(t_pre_tokens **head, int contain_quotes);
 
 
 
+
 //execution part start
-int				redirection(t_command *head);
+char	*expand_red(t_pre_tokens *node, int *ambiguous, t_env *env_head);
+
+int				redirection(t_command *head, t_env *env);
 char			**convert_link_to_2p(t_env *env);
 int				calculate_len_of_w(t_command *all_cmd, int i);
 int				calculate_number_of_args_in_node(t_command *all_cmd);
@@ -175,5 +180,12 @@ int				exec_built(int n, t_command *cmds, t_env *env, t_env *export_head);
 //built part end
 
 //execution part end
+
+
+
+int	get_len(char *var, t_env *env);
+char	*expnd(char *var, t_env *env, int *amb);
+char	*get_index(char *idx);
+char	*get_value(char *idx, t_env **env);
 
 #endif

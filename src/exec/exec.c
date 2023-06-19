@@ -6,7 +6,7 @@
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:21:18 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/19 14:38:54 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:34:21 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	check_paths(char *path, char *cmd)
 	if ((path) && (ft_strncmp(path, "not", 4) == 0))
 	{
 		glob.exit_status = pr_err("minishell: ", cmd,
-				": No such file or directory\n", 1);
+				": No such file or directory\n", 127);
 		exit(glob.exit_status);
 	}
 	else if ((path) && (ft_strncmp(path, "dir",
@@ -81,18 +81,18 @@ void	simple_execute(char **cmd, int *pipes, int fd, t_command *node,
 	
 	if (is_built >= 11 && is_built <= 17)
 	{
-		if (node->in_error == 0)
+		if (node->in_error == 0 || 1)
 		{
-			if (redirection(node) == 0 && redirection(node) != 2)
+			if (redirection(node, env) == 0 && redirection(node, env) != 2)
 				exec_built(is_built, node, env, exp);
 		}
 		exit(glob.exit_status);
 	}
 	else
 	{
-		if (node->in_error == 0)
+		if (node->in_error == 0 || 1)
 		{
-			if (redirection(node) == 0 && redirection(node) != 2)
+			if (redirection(node, env) == 0 && redirection(node, env) != 2)
 			{
 				check_paths(node->path, cmd[0]);
 				e = convert_link_to_2p(env);
@@ -138,13 +138,13 @@ void	exec(char ***all_cmd, t_command *head, t_env *exp, t_env *env)
 		}
 		else
 		{
-			if (head->in_error == 0)
+			if (head->in_error == 0 || 1)
 			{
 				int fdin;
 				int fdout;
 				fdin = dup(0);
 				fdout = dup(1);
-				if (redirection(head) == 0 && redirection(head) != 2)
+				if (redirection(head, env) == 0 && redirection(head, env) != 2)
 					exec_built(is_built, head, env, exp);
 				dup2(fdin, 0);
 				close(fdin);

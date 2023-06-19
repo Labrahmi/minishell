@@ -6,7 +6,7 @@
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 12:23:46 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:13:55 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ int	main(int argc, char const *argv[], char **env)
 	while (1)
 	{
 		data.user_input = ft_read_input();
+		// printf("len: %d\n", get_len(data.user_input, env_head));
+		// char	*expn = expnd(data.user_input, env_head);
+		// char **arr = ft_split(expn, 2);
+		// printf("=========\n");
+		// if (arr[0] == NULL)
+		// 	puts("nothing");
+		// for (int i = 0; arr[i]; i++)
+		// 	puts(arr[i]);
+		// printf("========\n");
 		head_command = get_first_command(data.user_input, env_head);
 		if (head_command)
 		{

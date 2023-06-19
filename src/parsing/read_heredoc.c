@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 19:01:18 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 10:07:16 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:48:17 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,12 @@ int ft_read_heredoc(t_command **command_ix, t_env *env_head)
 	if (herdoc)
 		command->here_doc_data = ft_calloc(1, 1);
 	while (herdoc)
-	{
 		if (ft_read_heredoc_while(&string, &herdoc, command, env_head))
-			break;
-	}
+			break ;
 	if (pipe(pipe_hd) == -1)
-	{
-		return 0;
-	}
+		return (0);
 	if (pipe_hd[1] != -1 && command->here_doc_data)
 		write(pipe_hd[1], command->here_doc_data, ft_strlen(command->here_doc_data));
 	close(pipe_hd[1]);
-	return pipe_hd[0];
+	return (pipe_hd[0]);
 }
