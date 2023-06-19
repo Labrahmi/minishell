@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 09:27:28 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:50:01 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void			set_node_type(t_pre_tokens **head, int contain_quotes);
 
 
 //execution part start
-void			redirection(t_command *head);
+int				redirection(t_command *head);
 char			**convert_link_to_2p(t_env *env);
 int				calculate_len_of_w(t_command *all_cmd, int i);
 int				calculate_number_of_args_in_node(t_command *all_cmd);
@@ -153,7 +153,6 @@ void			conver_l_args_to_p(t_command *head_command);
 void			exec(char ***all_cmd, t_command *head, t_env *exp, t_env *env);
 char			***convert_linked_list_to_tr_p(t_command *head_command);
 int				pr_err(char *str1, char *str2, char *str3, int status);
-void			redirection(t_command *head);
 //set paths start
 char			*set_path(t_command *head_command, t_env *env_head);
 char			*remove_quote(char *content);

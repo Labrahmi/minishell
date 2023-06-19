@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:21:18 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/17 16:03:35 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:38:54 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	check_paths(char *path, char *cmd)
 	if ((path) && (ft_strncmp(path, "not", 4) == 0))
 	{
 		glob.exit_status = pr_err("minishell: ", cmd,
-				": No such file or directory\n", 127);
+				": No such file or directory\n", 1);
 		exit(glob.exit_status);
 	}
 	else if ((path) && (ft_strncmp(path, "dir",
@@ -66,8 +66,6 @@ void	simple_execute(char **cmd, int *pipes, int fd, t_command *node,
 	int		is_built;
 	char	**e;
 
-	if (node->in_error != 0)
-		return;
 	if (fd > -1)
 		close(fd);
 	if (pipes)
@@ -80,18 +78,27 @@ void	simple_execute(char **cmd, int *pipes, int fd, t_command *node,
 		close(pipes[1]);
 	}
 	is_built = check_if_buil(node->cmd, head);
+	
 	if (is_built >= 11 && is_built <= 17)
 	{
-		redirection(node);
-		exec_built(is_built, node, env, exp);
+		if (node->in_error == 0)
+		{
+			if (redirection(node) == 0 && redirection(node) != 2)
+				exec_built(is_built, node, env, exp);
+		}
 		exit(glob.exit_status);
 	}
 	else
 	{
-		redirection(node);
-		check_paths(node->path, cmd[0]);
-		e = convert_link_to_2p(env);
-		execve(node->path, cmd, e);
+		if (node->in_error == 0)
+		{
+			if (redirection(node) == 0 && redirection(node) != 2)
+			{
+				check_paths(node->path, cmd[0]);
+				e = convert_link_to_2p(env);
+				execve(node->path, cmd, e);
+			}
+		}
 		exit(glob.exit_status);
 	}
 }
@@ -131,16 +138,19 @@ void	exec(char ***all_cmd, t_command *head, t_env *exp, t_env *env)
 		}
 		else
 		{
-			int fdin;
-			int fdout;
-			fdin = dup(0);
-			fdout = dup(1);
-			redirection(head);
-			exec_built(is_built, head, env, exp);
-			dup2(fdin, 0);
-			close(fdin);
-			dup2(fdout, 1);
-			close(fdout);
+			if (head->in_error == 0)
+			{
+				int fdin;
+				int fdout;
+				fdin = dup(0);
+				fdout = dup(1);
+				if (redirection(head) == 0 && redirection(head) != 2)
+					exec_built(is_built, head, env, exp);
+				dup2(fdin, 0);
+				close(fdin);
+				dup2(fdout, 1);
+				close(fdout);
+			}
 		}
 	}
 	else
