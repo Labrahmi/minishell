@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 08:26:35 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:18:52 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void printf_linked(t_pre_tokens *head)
 	node = head;
 	while (node)
 	{
-		printf("[%s:%d]", node->content, node->contain_quotes);
+		printf("[%s]", node->content);
 		node = node->next;
 	}
 	printf("\n");
@@ -271,6 +271,19 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	return (tok.head);
 }
 
+void	free_sub(t_pre_tokens **args)
+{
+	int	i;
+
+	i = 0;
+	while (((*args)->sub.sub)[i])
+	{
+		free(((*args)->sub.sub)[i]);
+		i++;
+	}
+	free(((*args)->sub.sub));
+}
+
 t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 {
 	t_pre_tokens	*node;
@@ -287,8 +300,10 @@ t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 			add_pre_t_2(&returned, (node->sub.sub)[i], 0, node->sub.type);
 			i++;
 		}
+		free_sub(&node);
 		node = node->next;
 	}
+	free_linked(args);
 	return (returned);
 }
 

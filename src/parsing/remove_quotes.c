@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:22:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 08:08:27 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 11:20:18 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,13 +207,28 @@ typedef struct s_expand_variable
 {
 	t_token_list	token_list;
 	char			*str;
+	char			*token;
+	char			*newToken;
 	int				i;
 	int				len;
-	char			*token;
 	int				singleq;
 	int				doubleq;
-	char			*newToken;
 }	t_expand_variable;
+
+void	free_exp(t_expand_variable *var)
+{
+	int	i;
+
+	free(var->str);
+	free(var->token);
+	i = 0;
+	while (i < var->token_list.count)
+	{
+		free(var->token_list.tokens[i]);
+		i++;
+	}
+	free(var->token_list.tokens);
+}
 
 t_sub	expand_variable_2_tool(t_expand_variable *var, t_env *head_env)
 {
@@ -237,8 +252,10 @@ t_sub	expand_variable_2_tool(t_expand_variable *var, t_env *head_env)
 	while (i < var->token_list.count)
 		new_all = ft_strjoin(new_all, var->token_list.tokens[i++]);
 	new_splited = ft_split(new_all, 127);
+	free(new_all);
 	returned.type = TYPE_ARG;
 	returned.sub = new_splited;
+	free_exp(var);
 	return (returned);
 }
 
@@ -319,6 +336,7 @@ void	ft_init_ex_2_vars(t_expand_variable *var, char *content)
 t_sub expand_variable_2(t_pre_tokens **node_ix, t_env *head_env)
 {
 	t_expand_variable	var;
+	t_sub				ret;
 
 	ft_init_ex_2_vars(&var, (*node_ix)->content);
 	while (var.i < var.len)
@@ -342,7 +360,8 @@ t_sub expand_variable_2(t_pre_tokens **node_ix, t_env *head_env)
 	}
 	if (var.token != NULL)
 		add_token(&(var.token_list), var.token);
-	return (expand_variable_2_tool(&var, head_env));
+	ret = (expand_variable_2_tool(&var, head_env));
+	return (ret);
 }
 
 int set_up_remove_vars(int *j, int *in_single, int *in_double)
@@ -445,12 +464,18 @@ void	ft_remove_quotes_2(t_pre_tokens **head, t_env *head_env)
 		if (node->type == TYPE_ARG)
 		{
 			if ((!(node->prev)) || (node->prev->type == TYPE_ARG || node->prev->type == TYPE_RED_PIP))
+			{
 				node->sub = expand_variable_2(&node, head_env);
+			}
 			else
+			{
 				node->sub = get_sub_from_node(&node);
+			}
 		}
 		else
+		{
 			node->sub = get_sub_from_node(&node);
+		}
 		node = node->next;
 	}
 }

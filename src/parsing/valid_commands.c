@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/19 14:39:56 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:43:55 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,10 @@ char	*expand_red(t_pre_tokens *node, int *ambiguous, t_env *env_head)
 	if ((total == 0) || (total > 1))
 	{
 		*ambiguous = 1;
+		free(node->content);
 		return ft_strdup("");
 	}
+	free(node->content);
 	return (strings.sub[0]);
 }
 
@@ -162,7 +164,7 @@ int check_in_error(t_command **commands_ix, t_env *env_head)
 			if (ret == 1 || ret == 2)
 				return (ret);
 		}
-		if ((node->prev) && (node->prev->type != TYPE_RED_HER))
+		if ((!node->prev) || ((node->prev) && (node->prev->type != TYPE_RED_HER)))
 			node->content = remove_quote(node->content);
 		node = node->next;
 	}
