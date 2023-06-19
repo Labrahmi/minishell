@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/17 16:26:40 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 08:29:42 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char const *argv[], char **env)
 	char			***all_cmd;
 	t_env			*export_head;
 	int				is_built;
-
 
 	// signal(SIGINT, sigint_handler);
 	// signal(SIGQUIT, sigquit_handler);

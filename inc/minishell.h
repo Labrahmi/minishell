@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/15 16:55:13 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 09:27:28 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,11 @@ int				valid_arguments(t_pre_tokens **head_args);
 int				valid_commands(t_command **head_commands, t_env *env_head);
 void			print_error(char *error_msg, int error_num);
 int				add_pre_t_2(t_pre_tokens **head, char *content, t_pre_tokens *node, enum token_type type);
-int				ft_read_heredoc(t_command **command_ix);
+int				ft_read_heredoc(t_command **command_ix, t_env *env_head);
 int				contains_quotes(char *content);
 char			*expand_variable(char *token, t_env *head_env, int state);
 t_sub			expand_variable_2(t_pre_tokens **node_ix, t_env *head_env);
+void			set_node_type(t_pre_tokens **head, int contain_quotes);
 
 
 

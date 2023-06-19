@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/18 22:40:41 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:03:15 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,13 @@ int	check_in_err_help(t_pre_tokens *node, int *ambiguous, t_env *env_head)
 		}
 		close(in_file_fd);
 	}
-	if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
-		node->content = expand_red(node, ambiguous, env_head);
-	if (*ambiguous == 1)
-		return (1);
+	if (node->prev->type != TYPE_RED_HER)
+	{
+		if ((node->prev->type != TYPE_ARG) && (node->prev->type != TYPE_RED_PIP))
+			node->content = expand_red(node, ambiguous, env_head);
+		if (*ambiguous == 1)
+			return (1);
+	}
 	return (0);
 }
 
@@ -159,13 +162,14 @@ int check_in_error(t_command **commands_ix, t_env *env_head)
 			if (ret == 1 || ret == 2)
 				return (ret);
 		}
-		node->content = remove_quote(node->content);
+		if ((node->prev) && (node->prev->type != TYPE_RED_HER))
+			node->content = remove_quote(node->content);
 		node = node->next;
 	}
 	return (0);
 }
 
-void	valid_commands_2(t_command **head_commands, int ret)
+void	valid_commands_2(t_command **head_commands, int ret, t_env *env_head)
 {
 	t_command	*command;
 	int			stpo;
@@ -177,7 +181,7 @@ void	valid_commands_2(t_command **head_commands, int ret)
         if (command->has_error)
             stpo = 1;
         if (!stpo)
-            ft_read_heredoc(&command);
+			command->pipe_hd = ft_read_heredoc(&command, env_head);
         command = command->next;
     }
     if (ret == 0)
@@ -214,6 +218,6 @@ int valid_commands(t_command **head_commands, t_env *env_head)
     }
     if (ret != 0)
         print_error("syntax error\n", 258);
-	valid_commands_2(head_commands, ret);
+	valid_commands_2(head_commands, ret, env_head);
     return (ret > 0);
 }

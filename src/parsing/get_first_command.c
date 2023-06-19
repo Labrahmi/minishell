@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/18 22:53:30 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/19 08:26:35 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void printf_linked(t_pre_tokens *head)
 	node = head;
 	while (node)
 	{
-		printf("[%s]", node->content);
+		printf("[%s:%d]", node->content, node->contain_quotes);
 		node = node->next;
 	}
 	printf("\n");
