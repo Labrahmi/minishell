@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_first_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 17:04:52 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:55:58 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	free_linked(t_pre_tokens **head)
 	while (node)
 	{
 		next = node->next;
-		// free(node->content);
+		free(node->content);
 		free(node);
 		node = next;
 	}
@@ -271,17 +271,17 @@ t_pre_tokens *ft_tokenizer(char *user_input)
 	return (tok.head);
 }
 
-void	free_sub(t_pre_tokens **args)
+void	free_sub(t_pre_tokens *args)
 {
 	int	i;
 
 	i = 0;
-	while (((*args)->sub.sub)[i])
+	while ((args->sub.sub)[i])
 	{
-		free(((*args)->sub.sub)[i]);
+		free((args->sub.sub)[i]);
 		i++;
 	}
-	free(((*args)->sub.sub));
+	free((args->sub.sub));
 }
 
 t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
@@ -300,10 +300,11 @@ t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 			add_pre_t_2(&returned, (node->sub.sub)[i], 0, node->sub.type);
 			i++;
 		}
-		free_sub(&node);
+		free_sub(node);
 		node = node->next;
 	}
 	free_linked(args);
+	
 	return (returned);
 }
 
@@ -315,6 +316,7 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 
 	head_args = ft_tokenizer(user_input);
 	ft_remove_quotes(&head_args, env_head);
+	// print_leaks();
 	head_args = ft_set_subs(&head_args);
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);

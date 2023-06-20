@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/19 18:50:56 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:42:24 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ typedef struct s_command
 	char				*path;
 	char				*here_doc_data;
 	int					pipe_hd;
-	struct s_command	*next;
 	int					has_error;
 	int					in_error;
+	struct s_command	*next;
 }	t_command;
 
 void			ft_error(char *message);
