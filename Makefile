@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+         #
+#    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/06/19 18:40:06 by bel-kdio         ###   ########.fr        #
+#    Updated: 2023/06/20 12:15:11 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,13 +35,15 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = #-fsanitize=address -g #-Wall -Wextra -Werror
+CFLAGS = -I/Users/ylabrahm/Desktop/homebrew/opt/readline/include #-fsanitize=address -g #-Wall -Wextra -Werror
 
 all: $(NAME)
 
+
+
 $(NAME): $(OBJ)
 	@make -C ./inc/libft/
-	$(CC) $(OBJ) $(LIBFT) $(CFLAGS) -lreadline -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(CFLAGS) -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -lreadline -o $(NAME)
 
 obj/%.o: %.c inc/minishell.h
 	@mkdir -p $(shell dirname $@)

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 10:07:17 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/20 11:41:05 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:18:25 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ int	input(t_pre_tokens *in, t_env *env)
 		if (fd == -1)
 			return (glob.exit_status = perr(exp, strerror(errno), 1), free(exp), 1);
 		dup2(fd, 0);
-		printf("dup input\n");
 		close(fd);
 		in = in->next;
 	}
