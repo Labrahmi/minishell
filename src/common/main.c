@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/20 12:15:47 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:53:26 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ void	sigint_handler(int sig_num)
 	signal(SIGINT, sigint_handler);
 }
 
-void	sigquit_handler(int sig_num)
-{
-	signal(SIGQUIT, sigquit_handler);
-}
-
 int	main(int argc, char const *argv[], char **env)
 {
 	t_user_data		data;
@@ -37,7 +32,7 @@ int	main(int argc, char const *argv[], char **env)
 	int				is_built;
 
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
+	signal(SIGQUIT, SIG_IGN);
 	(void)argc;
 	(void)argv;
 	env_head = ft_set_env(env);
