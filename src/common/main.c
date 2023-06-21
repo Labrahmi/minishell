@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 15:41:17 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:00:15 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	main(int ac, char *av[], char **env)
 			free_commands(&head_command);
 		}
 		free(data.user_input);
-		// print_leaks();
 	}
 	return (0);
 }

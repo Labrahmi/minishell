@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:13:40 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/15 16:24:46 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:44:13 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_pre_tokens	*add_to_command(t_pre_tokens *node, t_command **f_command)
 
 	new_command = malloc(sizeof(t_command));
 	if (!new_command)
-		return 0;
+		return (0);
 	temp_node = node;
 	new_command->args = node;
 	set_null_memeber(&new_command, 1);

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 12:48:18 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:08:29 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,11 @@ void	print_leaks()
 	system("leaks minishell | grep -A20 'leaks Report Version: 4.0'");
 }
 
-int ft_cnt(char *string)
-{
-	int i;
-
-	i = 0;
-	if (!(string))
-		ft_error("Something goes wrong\n");
-	while (string[i])
-	{
-		if (string[i] == '\'' || string[i] == '\"')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 char *ft_read_input()
 {
-	char *prompt;
-	char *user_input;
-	char *trimed_value;
+	char	*prompt;
+	char	*user_input;
+	char	*trimed_value;
 
 	prompt = ft_colorize(ft_strdup("minishell-1.0> "), "green");
 	user_input = readline(prompt);
@@ -50,32 +34,6 @@ char *ft_read_input()
 	trimed_value = ft_strtrim(user_input, " \t");
 	free(user_input);
 	return (trimed_value);
-}
-
-char	*say_type(enum token_type type)
-{
-	switch (type)
-	{
-		case TYPE_ARG:
-			return ("_____Argument_____");
-		break;
-		case TYPE_RED_IN:
-			return ("_Input-Redirection");
-		break;
-		case TYPE_RED_OUT:
-			return ("Output-Redirection");
-		break;
-		case TYPE_RED_APP:
-			return ("___Append-Output__");
-		break;
-		case TYPE_RED_HER:
-			return ("___Here-Document__");
-		break;
-		case TYPE_RED_PIP:
-			return ("________Pip_______");
-		break;
-	}
-	return ("_____Argument_____");
 }
 
 void printf_linked(t_pre_tokens *head)
@@ -208,8 +166,8 @@ void	free_commands(t_command **head)
 		free_linked(&(command->output_files));
 		free_linked(&(command->append_files));
 		free_linked(&(command->herdoc_files));
-		// free(command->herdoc_files);
-		free(command->here_doc_data);
+		if (command->here_doc_data)
+			free(command->here_doc_data);
 		free(command->cmd);
 		free(command);
 		command = command_next;
