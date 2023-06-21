@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:50:34 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 15:29:10 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:35:36 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ void	exp_if_db_quo(int *i, int *j, char *var, char *exp)
 				exp[(*j)++] = var[(*i)++];
 			}
 			key = get_index(var + *i);
-			if (ft_strncmp(key, "?", 2) == 0)
-				value = ft_itoa(glob.exit_status);
-			else
-				value = get_value(key, &glob.env);
+			value = exit_st(key);
 			*i += ft_strlen(key);
 			ft_memcpy(&exp[*j], value, ft_strlen(value));
 			*j += ft_strlen(value);
@@ -90,10 +87,7 @@ void	exp_if_dollar(int *i, int *j, char *var, char *exp)
 	else
 	{
 		key = get_index(var + *i);
-		if (ft_strncmp(key, "?", 2) == 0)
-			value = ft_itoa(glob.exit_status);
-		else
-			value = get_value(key, &glob.env);
+		value = exit_st(key);
 		*i += ft_strlen(key);
 		k = -1;
 		while (value[++k])

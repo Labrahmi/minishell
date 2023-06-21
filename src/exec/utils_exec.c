@@ -6,7 +6,7 @@
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:15:58 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 14:54:03 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:30:29 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,17 @@ void	free_all_cmd(char ***all_cmd)
 		i++;
 	}
 	free(all_cmd);
+}
+
+char	*exit_st(char *key)
+{
+	char	*value;
+
+	if (ft_strncmp(key, "?", 2) == 0)
+		value = ft_itoa(glob.exit_status);
+	else
+		value = get_value(key, &glob.env);
+	return (value);
 }
 
 void	check_paths(char *path, char *cmd)

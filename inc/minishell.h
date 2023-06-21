@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 15:33:53 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:35:00 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int				is_valid_variable(char after_dollar);
 //execution part start
 
 //expanding
+char			*exit_st(char *key);
 char			*expand_redirs(char *var);
 char			*expand_red(t_pre_tokens *node, int *ambiguous);
 int				get_len(char *var);

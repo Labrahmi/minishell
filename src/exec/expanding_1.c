@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:03:00 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 15:31:20 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:52:14 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	get_len_if_sin_quo(int *i, int *len, char *var)
 		(*len)++;
 	}
 	(*i)++;
+}
+
+void	if_not_valid(char *key, char **value, int *i, int *len)
+{
+	*value = exit_st(key);
+	*i += ft_strlen(key);
+	*len += ft_strlen(*value);
 }
 
 void	get_len_if_db_quo(int *i, int *len, char *var, t_env *env)
@@ -36,12 +43,7 @@ void	get_len_if_db_quo(int *i, int *len, char *var, t_env *env)
 			else
 			{
 				key = get_index(var + *i);
-				if (ft_strncmp(key, "?", 2) == 0)
-					value = ft_itoa(glob.exit_status);
-				else
-					value = get_value(key, &env);
-				*i += ft_strlen(key);
-				*len += ft_strlen(value);
+				if_not_valid(key, &value, i, len);
 				free(key);
 				free(value);
 			}

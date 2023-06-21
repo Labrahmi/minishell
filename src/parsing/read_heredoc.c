@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   read_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 19:01:18 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 00:14:14 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:05:19 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void reset_here(char **herdoc)
+void	reset_here(char **herdoc)
 {
 	free(*herdoc);
 	*herdoc = ft_calloc(1, 1);
 }
 
-void join_herdoc(char **herdoc, char *string, int contains_quotes, t_env *env_head)
+void	join_herdoc(char **herdoc, char *string, int contains_quotes,
+		t_env *env_head)
 {
 	if (contains_quotes == 0)
 		string = expand_variable(ft_strdup(string), env_head, 2);
 	*herdoc = ft_strjoin(*herdoc, string);
-	free(string);
 }
 
-int is_delimiter(char *del, char *content)
+int	is_delimiter(char *del, char *content)
 {
-	int check;
-	char *deli;
+	int		check;
+	char	*deli;
 
 	deli = ft_strtrim(del, "\n");
 	check = ft_strncmp(content, deli, ft_strlen(content) + 1);
@@ -40,34 +40,35 @@ int is_delimiter(char *del, char *content)
 	return (0);
 }
 
-int	ft_read_heredoc_while(t_pre_tokens **herdoc, t_command *command, t_env *env_head)
+int	ft_read_heredoc_while(char **string_ix, t_pre_tokens **herdoc,
+		t_command *command, t_env *env_head)
 {
 	char	*string;
-	char	*yes;
-	int		cq;
+		int cq;
 
+	string = *string_ix;
 	if (isatty(0))
 		ft_putstr_fd("> ", 1);
 	string = get_next_line(0);
 	if (!string)
 		return (1);
-	yes = ft_strdup((*herdoc)->content);
-	if (is_delimiter(string, remove_quote(yes)))
+	ft_strtrim(string, "\n");
+	if (is_delimiter(string, remove_quote(ft_strdup((*herdoc)->content))))
 	{
 		*herdoc = (*herdoc)->next;
 		if (*herdoc)
 			reset_here(&(command->here_doc_data));
-		free(string);
 	}
 	else
 	{
-		cq = contains_quotes((*herdoc)->content);
+		cq = contains_quotes(ft_strdup((*herdoc)->content));
 		join_herdoc(&command->here_doc_data, string, cq, env_head);
 	}
+	free(string);
 	return (0);
 }
 
-int ft_read_heredoc(t_command **command_ix, t_env *env_head)
+int	ft_read_heredoc(t_command **command_ix, t_env *env_head)
 {
 	t_command		*command;
 	t_pre_tokens	*herdoc;
@@ -78,24 +79,23 @@ int ft_read_heredoc(t_command **command_ix, t_env *env_head)
 	command = *command_ix;
 	string = 0;
 	herdoc = command->herdoc_files;
+	if (herdoc == NULL)
+		return (-1);
 	if (herdoc)
 		command->here_doc_data = ft_calloc(1, 1);
 	while (herdoc)
-	{
-		glob.in_herdoc = 1;
-		if (ft_read_heredoc_while(&herdoc, command, env_head))
+		if (ft_read_heredoc_while(&string, &herdoc, command, env_head))
 			break ;
-	}
 	if (glob.in_herdoc == 3)
 	{
 		glob.in_herdoc = 0;
 		return (-2);
 	}
-	// print_leaks();
 	if (pipe(pipe_hd) == -1)
 		return (0);
 	if (pipe_hd[1] != -1 && command->here_doc_data)
-		write(pipe_hd[1], command->here_doc_data, ft_strlen(command->here_doc_data));
+		write(pipe_hd[1], command->here_doc_data,
+			ft_strlen(command->here_doc_data));
 	close(pipe_hd[1]);
 	return (pipe_hd[0]);
 }
