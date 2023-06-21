@@ -6,17 +6,11 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 19:01:18 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 18:33:55 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:57:41 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	reset_here(char **herdoc)
-{
-	free(*herdoc);
-	*herdoc = ft_calloc(1, 1);
-}
 
 void	join_herdoc(char **herdoc, char **string, int contains_quotes,
 		t_env *env_head)
@@ -68,32 +62,36 @@ int	ft_read_heredoc_while(char *string, t_pre_tokens **herdoc,
 	return (0);
 }
 
+int	handle_gigs(void)
+{
+	if (glob.in_herdoc == 3)
+	{
+		glob.in_herdoc = 0;
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_read_heredoc(t_command **command_ix, t_env *env_head)
 {
 	t_command		*command;
 	t_pre_tokens	*herdoc;
 	char			*string;
-	char			*all;
 	int				pipe_hd[2];
 
 	command = *command_ix;
-	string = 0;
 	herdoc = command->herdoc_files;
 	if (herdoc == NULL)
 		return (-1);
-	if (herdoc)
-		command->here_doc_data = ft_calloc(1, 1);
+	command->here_doc_data = ft_calloc(1, 1);
 	while (herdoc)
 	{
 		glob.in_herdoc = 1;
 		if (ft_read_heredoc_while(string, &herdoc, command, env_head))
 			break ;
 	}
-	if (glob.in_herdoc == 3)
-	{
-		glob.in_herdoc = 0;
+	if (handle_gigs())
 		return (-2);
-	}
 	if (pipe(pipe_hd) == -1)
 		return (0);
 	if (pipe_hd[1] != -1 && command->here_doc_data)

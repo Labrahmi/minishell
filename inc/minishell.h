@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:43:06 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 17:46:18 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:27:05 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <errno.h>
-# include <string.h>
 # include <signal.h>
+# include <string.h>
 
 typedef struct s_env
 {
@@ -52,6 +52,11 @@ enum token_type
 	TYPE_RED_PIP = 6,
 };
 
+typedef struct s_token_list
+{
+	char	**tokens;
+	int		count;
+}	t_token_list;
 
 typedef struct s_check_arg
 {
@@ -82,7 +87,7 @@ typedef struct s_pre_tokens
 typedef struct tokenizer_s
 {
 	int				in_double_quotes;
-	char			*user_input;
+	char			*us_in;
 	int				in_quotes;
 	t_pre_tokens	*head;
 	int				start;
@@ -117,7 +122,6 @@ typedef struct s_command
 
 void			ft_error(char *message);
 void			free_double(char **array);
-char			*ft_colorize(char *message, char *color);
 int				add_pre_t(t_pre_tokens **head, char *content, int state);
 void			free_linked(t_pre_tokens **head);
 void			ft_remove_quotes(t_pre_tokens **head, t_env *head_env);
@@ -134,8 +138,17 @@ int				is_symbol(char symbol);
 int				sub_and_add(char *user_input, int start, int end, t_pre_tokens **head);
 void			printf_env(t_env *head);
 void			printf_commands(t_command *head);
-char			*ft_read_input();
-void			print_leaks();
+char			*ft_read_input(void);
+int				sb_ad_ad(char *us_in, int start, int end, t_pre_tokens **head);
+int				is_symbol(char symbol);
+int				ad_sbl(t_pre_tokens **head, char *us_in, int start, int *end);
+void			*ft_init_zeros(tokenizer_t *tok);
+void			free_linked(t_pre_tokens **head);
+void			free_commands(t_command **head);
+void			reset_here(char **herdoc);
+
+
+void			print_leaks(void);
 t_command		*get_first_command(char *user_input, t_env *env_head);
 int				valid_arguments(t_pre_tokens **head_args);
 int				valid_commands(t_command **head_commands, t_env *env_head);
@@ -146,9 +159,15 @@ int				contains_quotes(char *content);
 char			*expand_variable(char *token, t_env *head_env, int state);
 t_sub			expand_variable_2(t_pre_tokens *node_ix, t_env *head_env);
 void			set_node_type(t_pre_tokens **head, int contain_quotes);
-
 char			**expand_redirs_2(char *var, t_env *env);
 int				is_valid_variable(char after_dollar);
+void			four_free(char **tk, char **sf, char **evix, char **evvl);
+char			*get_new_token(char **token, char *new, t_env *head_env, int i);
+void			expand_loop_1(char **token, int in_single_quote, int in_double_quote, int i);
+void			expand_loop_2(char **token, int in_single_quote, int in_double_quote, int i);
+int				set_up_remove_vars(int *j, int *in_single, int *in_double);
+t_sub			get_sub_from_node(t_pre_tokens **node_ix);
+
 
 
 

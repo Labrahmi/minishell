@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:41:41 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/15 16:47:31 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:59:55 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ int	valid_arguments(t_pre_tokens **head_args)
 	}
 	return (ret);
 }
-
