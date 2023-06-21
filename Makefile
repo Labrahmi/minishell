@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
+#    By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/06/20 12:15:11 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/06/21 14:49:42 by bel-kdio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRC =src/common/main.c src/parsing/get_first_command.c src/parsing/error.c \
 	src/builtin/exec_pwd.c src/builtin/exec_unset.c src/builtin/exec_export.c \
 	src/exec/set_paths.c src/exec/conv_linked_to_tr_p.c src/exec/utils_exec.c \
 	src/builtin/exec_export_mod.c src/exec/calculating.c src/exec/redirections.c \
+	src/exec/expanding.c src/exec/redirections_1.c src/exec/expanding_1.c\
+	src/exec/exec_1.c src/exec/syntax_export.c\
 
 OBJ := $(SRC:.c=.o)
 OBJ := $(addprefix obj/, $(OBJ))
@@ -35,15 +37,13 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -I/Users/ylabrahm/Desktop/homebrew/opt/readline/include #-fsanitize=address -g #-Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror #-fsanitize=address -g 
 
 all: $(NAME)
 
-
-
 $(NAME): $(OBJ)
 	@make -C ./inc/libft/
-	$(CC) $(OBJ) $(LIBFT) $(CFLAGS) -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -lreadline -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(CFLAGS) -lreadline -o $(NAME)
 
 obj/%.o: %.c inc/minishell.h
 	@mkdir -p $(shell dirname $@)

@@ -6,7 +6,7 @@
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:31:54 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/20 07:46:22 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/21 10:37:22 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,14 @@ void	print_export(t_env *exp)
 	}
 }
 
-int	exec_export(t_env *export, t_command *cmds, t_env *envi)
+int	exec_export(t_command *cmds)
 {
-	t_env		*exp;
-	t_env		*env;
 	t_command	*cmd;
 
-	exp = export;
 	cmd = cmds;
-	env = envi;
 	if (!cmds->db_args[0])
-		print_export(exp);
+		print_export(glob.export);
 	else
-		mod_env_exp(env, exp, cmd);
+		mod_env_exp(cmd);
 	return (4);
 }

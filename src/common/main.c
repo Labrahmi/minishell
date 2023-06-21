@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 00:49:33 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/20 15:56:10 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:41:17 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,22 @@
 
 t_globals	glob;
 
-void	sigint_handler(int sig_num)
-{
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	write(1, "\n", 1);
-	rl_redisplay();
-	glob.exit_status = 1;
-	signal(SIGINT, sigint_handler);
-}
+// void	sigint_handler(int sig_num)
+// {
+// 	glob.exit_status = 1;
+// 	write(1, "\n", 1);
+// 	if (glob.in_herdoc == 1)
+// 	{
+// 		glob.in_herdoc = 3;
+// 		close(0);
+// 	}
+// 	else
+// 	{
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 	}
+// }
 
 int	main(int ac, char *av[], char **env)
 {
@@ -33,34 +40,30 @@ int	main(int ac, char *av[], char **env)
 	t_env			*export_head;
 	int				is_built;
 
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, sigint_handler);
+	// signal(SIGQUIT, SIG_IGN);
+	glob.dup = dup(0);
 	env_head = ft_set_env(env);
 	export_head = ft_set_env(env);
 	glob.exit_status = 0;
+	glob.in_herdoc = 0;
+	glob.env = ft_set_env(env);
+	glob.export = ft_set_env(env);
 	while (1)
 	{
+		dup2(glob.dup, 0);
 		data.user_input = ft_read_input();
 		head_command = get_first_command(data.user_input, env_head);
 		if (head_command)
 		{
-			// conver_l_args_to_p(head_command);
-			// all_cmd = convert_linked_list_to_tr_p(head_command);
-			// exec(all_cmd, head_command, export_head, env_head);
-			printf_commands(head_command);
+			conver_l_args_to_p(head_command);
+			all_cmd = convert_linked_list_to_tr_p(head_command);
+			exec(all_cmd, head_command);
+			// printf_commands(head_command);
 			free_commands(&head_command);
 		}
 		free(data.user_input);
-		print_leaks();
+		// print_leaks();
 	}
 	return (0);
 }
-
-// int main(int argc, char const *argv[])
-// {
-// 	int	fd = open("out.txt", O_CREAT | O_RDONLY | O_WRONLY, 777);
-// 	dup2(fd, STDOUT_FILENO);
-// 	printf("Hello World 1\n");
-// 	close(fd);
-// 	return (0);
-// }

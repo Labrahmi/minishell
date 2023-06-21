@@ -6,7 +6,7 @@
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:10:33 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/09 13:21:54 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:17:31 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ void	conver_l_args_to_p(t_command *head_command)
 	}
 }
 
-char	**convert_link_to_2p(t_env *env)
+char	**convert_link_to_2p(void)
 {
 	t_env	*tmp;
 	int		size;
 	char	**arr;
 
-	tmp = env;
+	tmp = glob.env;
 	size = 0;
 	while (tmp)
 	{
 		size++;
 		tmp = tmp->next;
 	}
-	tmp = env;
+	tmp = glob.env;
 	arr = malloc(sizeof(char *) * (size + 1));
 	arr[size] = NULL;
 	size = 0;

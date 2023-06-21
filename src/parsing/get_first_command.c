@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/20 15:55:58 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:48:18 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void	free_commands(t_command **head)
 		free_linked(&(command->output_files));
 		free_linked(&(command->append_files));
 		free_linked(&(command->herdoc_files));
+		// free(command->herdoc_files);
 		free(command->here_doc_data);
 		free(command->cmd);
 		free(command);
@@ -278,6 +279,7 @@ void	free_sub(t_pre_tokens *args)
 	i = 0;
 	while ((args->sub.sub)[i])
 	{
+		if ((args->sub.sub)[i] != ((char *)-1))
 		free((args->sub.sub)[i]);
 		i++;
 	}
@@ -297,14 +299,22 @@ t_pre_tokens	*ft_set_subs(t_pre_tokens **args)
 		i = 0;
 		while ((node->sub.sub)[i])
 		{
-			add_pre_t_2(&returned, (node->sub.sub)[i], 0, node->sub.type);
+			// char	*ptr;
+
+			// ptr = remove_quote(ft_strdup((node->sub.sub)[i]));
+			// printf("ptr: (%s)\n", ptr);
+			if ((node->sub.sub)[i] == ((char *)-1))
+			{
+				add_pre_t_2(&returned, "", 0, node->sub.type);
+			}
+			else
+				add_pre_t_2(&returned, (node->sub.sub)[i], 0, node->sub.type);
 			i++;
 		}
 		free_sub(node);
 		node = node->next;
 	}
 	free_linked(args);
-	
 	return (returned);
 }
 
@@ -316,7 +326,6 @@ t_command	*get_first_command(char *user_input, t_env *env_head)
 
 	head_args = ft_tokenizer(user_input);
 	ft_remove_quotes(&head_args, env_head);
-	// print_leaks();
 	head_args = ft_set_subs(&head_args);
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);
