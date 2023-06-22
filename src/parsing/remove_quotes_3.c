@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:15:01 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 21:55:44 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:56:43 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ char	*remove_quote(char *content)
 
 t_sub	get_sub_from_node(t_pre_tokens **node_ix)
 {
-	char	**sub;
 	t_sub	returned;
 
 	returned.type = (*node_ix)->type;

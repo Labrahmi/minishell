@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:23:14 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 13:28:40 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ int	exec_exit(t_pre_tokens *args, int status)
 		exit((unsigned char)status);
 	}
 	else
-		exit(glob.exit_status);
+		exit(g_glob.exit_status);
 	return (5);
 }

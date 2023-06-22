@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:12:44 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 21:52:01 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	expand_loop_1(char **token, int in_s_q,
 	int in_d_q, int i)
 {
-	t_pre_tokens	*head;
 	char			*new;
 
 	new = NULL;
@@ -29,7 +28,7 @@ void	expand_loop_1(char **token, int in_s_q,
 		{
 			if (!((*token)[i + 1]))
 				return ;
-			new = get_new_token(token, new, glob.env, i);
+			new = get_new_token(token, new, g_glob.env, i);
 			if ((ft_strlen(new) == 0))
 			{
 				*token = ft_strdup("");
@@ -43,7 +42,6 @@ void	expand_loop_1(char **token, int in_s_q,
 
 void	expand_loop_2(char **token, int in_s_q, int in_d_q, int i)
 {
-	t_pre_tokens	*head;
 	char			*new;
 
 	new = NULL;
@@ -57,7 +55,7 @@ void	expand_loop_2(char **token, int in_s_q, int in_d_q, int i)
 		{
 			if (!((*token)[i + 1]))
 				return ;
-			new = get_new_token(token, new, glob.env, i);
+			new = get_new_token(token, new, g_glob.env, i);
 			if ((ft_strlen(new) == 0))
 			{
 				*token = ft_strdup("");
@@ -78,6 +76,7 @@ char	*expand_variable(char *token, t_env *head_env, int state)
 	i = -1;
 	in_s_q = 0;
 	in_d_q = 0;
+	(void) head_env;
 	if (state == 1)
 		expand_loop_1(&token, in_s_q, in_d_q, i);
 	else
@@ -93,6 +92,7 @@ char	**expand_redirs_2(char *var, t_env *env)
 
 	exp = expnd(var, &n);
 	arr = ft_split(exp, 2);
+	(void) env;
 	free(exp);
 	if (!arr[0] && (ft_strchr(var, '\"') || ft_strchr(var, '\'')))
 	{

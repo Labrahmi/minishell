@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:44:11 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/20 16:46:08 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_built_in_simple(int is_built, t_command *node)
 	ret_red = redirection(node);
 	if (ret_red == 0 && ret_red != 2)
 		exec_built(is_built, node);
-	exit(glob.exit_status);
+	exit(g_glob.exit_status);
 }
 
 void	exec_cmd_in_simple(char **cmd, t_command *node)
@@ -31,10 +31,10 @@ void	exec_cmd_in_simple(char **cmd, t_command *node)
 	if (ret_red == 0 && ret_red != 2)
 	{
 		check_paths(node->path, cmd[0]);
-		e = convert_link_to_2p(glob.env);
+		e = convert_link_to_2p(g_glob.env);
 		execve(node->path, cmd, e);
 	}
-	exit(glob.exit_status);
+	exit(g_glob.exit_status);
 }
 
 void	simple_execute(char **cmd, int *pipes, int fd, t_command *node)

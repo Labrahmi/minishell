@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export_mod.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:46:02 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 14:48:49 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,19 @@ void	if_there_is_index_and_value(char *args)
 	j = loop_for_equal(args);
 	if (check_syntax_export(args))
 		return ;
-	if (!search_in_env(glob.export, ft_substr(args, 0, j)))
+	if (!search_in_env(g_glob.export, ft_substr(args, 0, j)))
 	{
 		str = ft_substr(args, j + 1, ft_strlen(args));
 		new_node = ft_lstnew_env(ft_substr(args, 0, j), str);
-		ft_lstadd_back_env(&glob.env, new_node);
+		ft_lstadd_back_env(&g_glob.env, new_node);
 		new_node = ft_lstnew_env(ft_substr(args, 0, j), str);
-		ft_lstadd_back_env(&glob.export, new_node);
+		ft_lstadd_back_env(&g_glob.export, new_node);
 	}
 	else
 	{
-		search_in_env_and_replace(glob.export, ft_substr(args, 0, j),
+		search_in_env_and_replace(g_glob.export, ft_substr(args, 0, j),
 			ft_substr(args, j + 1, ft_strlen(args)));
-		search_in_env_and_replace(glob.env, ft_substr(args, 0, j),
+		search_in_env_and_replace(g_glob.env, ft_substr(args, 0, j),
 			ft_substr(args, j + 1, ft_strlen(args)));
 	}
 }
@@ -98,7 +98,7 @@ void	mod_env_exp(t_command *cmd)
 			}
 			new_node = ft_lstnew_env(ft_substr(cmd->db_args[i], 0,
 						ft_strlen(cmd->db_args[i])), NULL);
-			ft_lstadd_back_env(&glob.export, new_node);
+			ft_lstadd_back_env(&g_glob.export, new_node);
 		}
 		i++;
 	}

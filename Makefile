@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/06/21 21:56:18 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/06/22 11:32:31 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = #-Wall -Wextra -Werror #-fsanitize=address -g 
+# CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -I/Users/ylabrahm/Desktop/homebrew/opt/readline/include
 
 all: $(NAME)
 

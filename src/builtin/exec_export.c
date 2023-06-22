@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:31:54 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 10:37:22 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exec_export(t_command *cmds)
 
 	cmd = cmds;
 	if (!cmds->db_args[0])
-		print_export(glob.export);
+		print_export(g_glob.export);
 	else
 		mod_env_exp(cmd);
 	return (4);

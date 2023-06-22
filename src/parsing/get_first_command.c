@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 19:24:50 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:53:40 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	ft_tokenizer_loop(tokenizer_t *tok)
 t_pre_tokens	*ft_tokenizer(char *us_in)
 {
 	tokenizer_t	tok;
-	char		*error;
 
 	tok.head = ft_init_zeros(&tok);
 	tok.us_in = ft_strdup(us_in);
@@ -103,7 +102,6 @@ t_command	*get_first_command(char *us_in, t_env *env_head)
 {
 	t_pre_tokens	*head_args;
 	t_command		*head_command;
-	char			*error;
 
 	head_args = ft_tokenizer(us_in);
 	ft_remove_quotes(&head_args, env_head);

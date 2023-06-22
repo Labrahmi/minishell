@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:29:39 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 13:30:30 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_syntax(char *args)
 		}
 		else
 		{
-			glob.exit_status = pr_err("minishell: unset: `", args,
+			g_glob.exit_status = pr_err("minishell: unset: `", args,
 					"': not a valid identifier\n", 1);
 			return (1);
 		}
@@ -86,7 +86,7 @@ int	exec_unset(char **args)
 	i = 0;
 	while (args[i])
 	{
-		check_and_free_unset(&glob.env, args[i], &glob.export);
+		check_and_free_unset(&g_glob.env, args[i], &g_glob.export);
 		i++;
 	}
 	return (7);

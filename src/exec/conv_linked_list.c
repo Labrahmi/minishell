@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conv_linked_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:10:33 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 13:17:31 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ char	**convert_link_to_2p(void)
 	int		size;
 	char	**arr;
 
-	tmp = glob.env;
+	tmp = g_glob.env;
 	size = 0;
 	while (tmp)
 	{
 		size++;
 		tmp = tmp->next;
 	}
-	tmp = glob.env;
+	tmp = g_glob.env;
 	arr = malloc(sizeof(char *) * (size + 1));
 	arr[size] = NULL;
 	size = 0;

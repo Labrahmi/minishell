@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 12:57:16 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/20 15:19:24 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*set_path(t_command *head_command)
 			if (tmp1->cmd && ft_strchr(tmp1->cmd, '/'))
 				tmp1->path = ft_strdup("not");
 			else
-				tmp1->path = if_not_file(tmp1->cmd, glob.env);
+				tmp1->path = if_not_file(tmp1->cmd, g_glob.env);
 		}
 	}
 	return (tmp1->path);

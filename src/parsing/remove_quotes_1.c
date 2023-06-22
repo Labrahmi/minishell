@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:11:37 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 20:22:24 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*get_value(char *index, t_env **head_env)
 {
 	t_env	*node;
 	int		cmp;
-	int		nlen;
 	int		ilen;
 
 	node = *head_env;
@@ -42,7 +41,7 @@ char	*get_value(char *index, t_env **head_env)
 	{
 		cmp = ft_strncmp(index, node->index, ft_strlen(node->index));
 		ilen = ft_strlen(index);
-		if (cmp == 0 && (ilen == ft_strlen(node->index)))
+		if (cmp == 0 && (ilen == ((int) ft_strlen(node->index))))
 			return (ft_strdup(node->value));
 		node = node->next;
 	}
@@ -70,7 +69,7 @@ char	*get_new_token(char **token, char *new, t_env *head_env, int i)
 
 	env_index = get_index(&(*token)[i + 1]);
 	if (env_index[0] == '?')
-		env_value = ft_itoa(glob.exit_status);
+		env_value = ft_itoa(g_glob.exit_status);
 	else
 		env_value = get_value(env_index, &head_env);
 	new = ft_substr((*token), 0, i);
