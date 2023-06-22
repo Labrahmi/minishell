@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 19:01:18 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:57:32 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	join_herdoc(char **herdoc, char **string, int contains_quotes,
 		t_env *env_head)
 {
+	(void) env_head;
 	if (contains_quotes == 0)
-		*string = expand_variable(*string, env_head, 2);
+		*string = expand_variable(*string, g_glob.env, 2);
 	*herdoc = ft_strjoin(*herdoc, *string);
 	free(*string);
 }
@@ -42,6 +43,7 @@ int	ft_read_heredoc_while(t_pre_tokens **herdoc,
 	char	*yes;
 	char	*string;
 
+	(void) env_head;
 	if (isatty(0))
 		ft_putstr_fd("> ", 1);
 	string = get_next_line(0);
@@ -58,7 +60,7 @@ int	ft_read_heredoc_while(t_pre_tokens **herdoc,
 	else
 	{
 		cq = contains_quotes((*herdoc)->content);
-		join_herdoc(&(command->here_doc_data), &string, cq, env_head);
+		join_herdoc(&(command->here_doc_data), &string, cq, g_glob.env);
 	}
 	return (0);
 }
@@ -79,6 +81,7 @@ int	ft_read_heredoc(t_command **command_ix, t_env *env_head)
 	t_pre_tokens	*herdoc;
 	int				pipe_hd[2];
 
+	(void) env_head;
 	command = *command_ix;
 	herdoc = command->herdoc_files;
 	if (herdoc == NULL)
@@ -87,7 +90,7 @@ int	ft_read_heredoc(t_command **command_ix, t_env *env_head)
 	while (herdoc)
 	{
 		g_glob.in_herdoc = 1;
-		if (ft_read_heredoc_while(&herdoc, command, env_head))
+		if (ft_read_heredoc_while(&herdoc, command, g_glob.env))
 			break ;
 	}
 	if (handle_gigs())

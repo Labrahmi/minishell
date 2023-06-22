@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 04:26:41 by macbook           #+#    #+#             */
-/*   Updated: 2023/06/22 11:01:26 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:56:16 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	valid_commands_2(t_command **head_commands, int ret, t_env *env_head)
 
 	stpo = 0;
 	(void) ret;
+	(void) env_head;
 	command = *head_commands;
 	while (command)
 	{
@@ -102,7 +103,7 @@ int	valid_commands_2(t_command **head_commands, int ret, t_env *env_head)
 			stpo = 1;
 		if (!stpo)
 		{
-			command->pipe_hd = ft_read_heredoc(&command, env_head);
+			command->pipe_hd = ft_read_heredoc(&command, g_glob.env);
 			if (command->pipe_hd == -2)
 				return (1);
 		}
@@ -120,6 +121,7 @@ int	valid_commands(t_command **head_commands, t_env *env_head)
 
 	ret = 0;
 	stpo = 0;
+	(void) env_head;
 	command = *head_commands;
 	while (command)
 	{
@@ -131,7 +133,7 @@ int	valid_commands(t_command **head_commands, t_env *env_head)
 	}
 	if (ret != 0)
 		print_error("syntax error\n", 258);
-	if (valid_commands_2(head_commands, ret, env_head))
+	if (valid_commands_2(head_commands, ret, g_glob.env))
 		return (1);
 	return (ret > 0);
 }
