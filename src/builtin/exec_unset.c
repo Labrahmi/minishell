@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:29:39 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:58:38 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int	mod_env_and_exp(t_env *env_tmp, char *args, t_env *prev_env, t_env **env)
 				prev_env->next = env_tmp->next;
 			else
 				*env = env_tmp->next;
-			if (prev_env != NULL)
-				env_tmp = prev_env->next;
-			else
-				env_tmp = *env;
+			free(env_tmp->index);
+			free(env_tmp->value);
+			free(env_tmp);
+			return (0);
 		}
 		else
 		{
@@ -75,7 +75,9 @@ void	check_and_free_unset(t_env **env, char *args, t_env **export)
 	export_tmp = *export;
 	prev_export = NULL;
 	if (mod_env_and_exp(env_tmp, args, prev_env, env))
+	{
 		return ;
+	}
 	mod_env_and_exp(export_tmp, args, prev_export, export);
 }
 

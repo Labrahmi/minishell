@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_first_command_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:21:59 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/21 22:09:45 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:57:01 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,21 @@ void	free_commands(t_command **head)
 	while (command)
 	{
 		command_next = command->next;
+		free(command->path);
+		free_double(command->db_args);
 		free_linked(&(command->args));
 		free_linked(&(command->input_files));
 		free_linked(&(command->output_files));
 		free_linked(&(command->append_files));
 		free_linked(&(command->herdoc_files));
 		if (command->here_doc_data)
+			close(command->pipe_hd);
+		if (command->here_doc_data)
 			free(command->here_doc_data);
-		free(command->cmd);
+		if (command->cmd)
+			free(command->cmd);
+		if (command->cmd)
+			command->cmd = NULL;
 		free(command);
 		command = command_next;
 	}

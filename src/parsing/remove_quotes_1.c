@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:11:37 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:51:51 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_value(char *index, t_env **head_env)
 	{
 		cmp = ft_strncmp(index, node->index, ft_strlen(node->index));
 		ilen = ft_strlen(index);
-		if (cmp == 0 && (ilen == ((int) ft_strlen(node->index))))
+		if (cmp == 0 && (ilen == (int)ft_strlen(node->index)))
 			return (ft_strdup(node->value));
 		node = node->next;
 	}

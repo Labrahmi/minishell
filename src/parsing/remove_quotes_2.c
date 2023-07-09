@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:12:44 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:53:08 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ char	*expand_variable(char *token, t_env *head_env, int state)
 	int	i;
 
 	i = -1;
+	(void)head_env;
 	in_s_q = 0;
 	in_d_q = 0;
-	(void) head_env;
 	if (state == 1)
 		expand_loop_1(&token, in_s_q, in_d_q, i);
 	else
@@ -91,8 +91,8 @@ char	**expand_redirs_2(char *var, t_env *env)
 	int		n;
 
 	exp = expnd(var, &n);
+	(void)env;
 	arr = ft_split(exp, 2);
-	(void) env;
 	free(exp);
 	if (!arr[0] && (ft_strchr(var, '\"') || ft_strchr(var, '\'')))
 	{

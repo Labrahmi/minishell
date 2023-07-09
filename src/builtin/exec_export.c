@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:31:54 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:05:53 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ void	print_export(t_env *exp)
 			ft_putstr_fd("\"\n", 1);
 		}
 		exp = exp->next;
+	}
+}
+
+void	mod_env_exp(t_command *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd->db_args[i])
+	{
+		if_there_is_index_and_value(cmd->db_args[i]);
+		i++;
 	}
 }
 

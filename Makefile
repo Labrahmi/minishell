@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 16:42:27 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/06/22 11:57:53 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/07/09 20:27:41 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = minishell
 
 LIBFT = ./inc/libft/libft.a
 
-SRC =src/common/main.c src/parsing/get_first_command.c src/parsing/get_first_command_1.c src/parsing/get_first_command_2.c src/parsing/get_first_command_3.c  \
+LDFLAGS=-LPATH/TO/homebrew/opt/readline/lib/
+
+SRC =src/common/main.c src/parsing/get_first_command.c src/parsing/get_first_command_1.c src/parsing/get_first_command_2.c src/parsing/get_first_command_3.c \
 	src/parsing/free_double.c src/parsing/error.c\
 	src/parsing/pre_t.c \
 	src/parsing/remove_quotes.c src/parsing/remove_quotes_1.c src/parsing/remove_quotes_2.c src/parsing/remove_quotes_3.c \
@@ -32,23 +34,24 @@ SRC =src/common/main.c src/parsing/get_first_command.c src/parsing/get_first_com
 	src/exec/exec_1.c src/exec/syntax_export.c\
 
 OBJ := $(SRC:.c=.o)
+
 OBJ := $(addprefix obj/, $(OBJ))
 
 CC = cc
 
 RM = rm -f
 
-# CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g -L/Users/ylabrahm/Desktop/homebrew/opt/readline/lib -I/Users/ylabrahm/Desktop/homebrew/opt/readline/include
+CFLAGS = -Wall -Wextra -Werror -IPATH/TO/homebrew/opt/readline/include/
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C ./inc/libft/
-	$(CC) $(OBJ) $(LIBFT) $(CFLAGS) -lreadline -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(LDFLAGS) $(CFLAGS) -lreadline -o $(NAME)
 
 obj/%.o: %.c inc/minishell.h
 	@mkdir -p $(shell dirname $@)
-	$(CC)  $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@make clean -C ./inc/libft/
@@ -59,3 +62,7 @@ fclean:	clean
 	$(RM) $(NAME)
 
 re:	fclean all
+
+bonus: all
+
+.PHONY: all clean fclean re bonus

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:21:18 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:42:55 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	if_onecmd_not_built(char **all_cmd, t_command *head)
 	else
 	{
 		waitpid(pid, &status, 0);
-		g_glob.exit_status = status >> 8;
+		if (!g_glob.is_interupted)
+			g_glob.exit_status = status >> 8;
 	}
 }
 
@@ -92,7 +93,6 @@ int	if_mult_cmds(t_command *head, int count_cmds, char ***all_cmd)
 		head = head->next;
 	}
 	close(fd);
-	free_all_cmd(all_cmd);
 	waitpid(pid, &status, 0);
 	return (status);
 }
@@ -116,9 +116,9 @@ void	exec(char ***all_cmd, t_command *head)
 	else
 	{
 		status = if_mult_cmds(head, count_cmds, all_cmd);
-		g_glob.exit_status = status >> 8;
+		if (!g_glob.is_interupted)
+			g_glob.exit_status = status >> 8;
 		while (waitpid(-1, &status, 0) != -1)
-		{
-		}
+			;
 	}
 }

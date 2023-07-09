@@ -6,7 +6,7 @@
 /*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:50:34 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/21 16:35:36 by bel-kdio         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:01:05 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ char	*expand_redirs(char *var)
 	while (arr[n])
 		n++;
 	if (n > 1)
-		return (free_double(arr), NULL);
+		return (free_double(arr), free(exp), NULL);
 	else if (n == 0 && (ft_strchr(exp, 2) || (!ft_strchr(var, '"')
 				&& !ft_strchr(var, '\''))))
-		return (free_double(arr), NULL);
+		return (free_double(arr), free(exp), NULL);
 	free(exp);
 	exp = arr[0];
 	if (arr[0] == NULL)
@@ -106,6 +106,7 @@ char	*expnd(char *var, int *amb)
 	int		i;
 	int		j;
 
+	(void)amb;
 	exp = ft_calloc(get_len(var) + 1, 1);
 	i = 0;
 	j = 0;

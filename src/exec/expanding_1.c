@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:03:00 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:03:03 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	get_len_if_db_quo(int *i, int *len, char *var, t_env *env)
 	char	*key;
 	char	*value;
 
+	(void)env;
 	while (var[*i] != '"')
 	{
 		if (var[*i] == '$' && ++(*i))
@@ -82,8 +83,6 @@ int	get_len(char *var)
 {
 	int		len;
 	int		i;
-	char	*key;
-	char	*value;
 
 	len = 0;
 	i = 0;

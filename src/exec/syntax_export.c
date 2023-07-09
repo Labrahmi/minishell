@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:48:38 by bel-kdio          #+#    #+#             */
-/*   Updated: 2023/06/22 11:26:02 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 12:41:13 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	loop_for_equal(char *args)
 	while (args[j])
 	{
 		if (args[j] == '=')
-			break ;
+			return (j);
 		j++;
 	}
-	return (j);
+	return (0);
 }
 
 int	syntax_with_equal(char *args)

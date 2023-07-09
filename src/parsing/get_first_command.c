@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_first_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bel-kdio <bel-kdio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:43:08 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/06/22 11:55:32 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:20:18 by bel-kdio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_tokenizer_loop(tokenizer_t *tok)
+int	ft_tokenizer_loop(t_tokenizer_t *tok)
 {
 	int	ret;
 
@@ -25,7 +25,7 @@ int	ft_tokenizer_loop(tokenizer_t *tok)
 			tok->in_quotes = !(tok->in_quotes);
 		if (!(tok->in_quotes) && !(tok->in_double_quotes))
 		{
-			if (tok->us_in[tok->end] == ' ')
+			if (tok->us_in[tok->end] == ' ' || tok->us_in[tok->end] == '\t')
 			{
 				ret += sb_ad_ad(tok->us_in, tok->start, tok->end, &tok->head);
 				tok->start = tok->end + 1;
@@ -43,7 +43,7 @@ int	ft_tokenizer_loop(tokenizer_t *tok)
 
 t_pre_tokens	*ft_tokenizer(char *us_in)
 {
-	tokenizer_t	tok;
+	t_tokenizer_t	tok;
 
 	tok.head = ft_init_zeros(&tok);
 	tok.us_in = ft_strdup(us_in);
@@ -104,15 +104,14 @@ t_command	*get_first_command(char *us_in, t_env *env_head)
 	t_command		*head_command;
 
 	head_args = ft_tokenizer(us_in);
-	(void) env_head;
-	ft_remove_quotes(&head_args, g_glob.env);
+	ft_remove_quotes(&head_args, env_head);
 	head_args = ft_set_subs(&head_args);
 	if (valid_arguments(&head_args) == 1)
 		return (NULL);
 	head_command = ft_fill_commands(&head_args);
 	if (head_command)
 	{
-		if (valid_commands(&head_command, g_glob.env) == 1)
+		if (valid_commands(&head_command, env_head) == 1)
 		{
 			free_commands(&head_command);
 			return (NULL);
